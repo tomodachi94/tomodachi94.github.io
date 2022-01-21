@@ -1,6 +1,6 @@
 ===
 title: "How I Transcribe Handwritten Notes Into Obsidian"
-date: 2022-01-17T17:46:08-08:00
+date: 2022-01-17
 draft: true
 legacy_url: "https://tomodachi.writeas.com/tomodachi/how-i-transcribe-notes-in-obsidian/"
 ===
