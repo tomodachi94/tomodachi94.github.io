@@ -1,7 +1,7 @@
 ---
 title: "How I Transcribe Handwritten Notes Into Obsidian"
 date: 2022-01-17
-draft: true
+draft: false
 legacy_url: "https://tomodachi.writeas.com/tomodachi/how-i-transcribe-notes-in-obsidian/"
 ---
 
