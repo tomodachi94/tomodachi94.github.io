@@ -11,11 +11,13 @@ It is extremely extensible, and we'll be taking advantage of that to edit on Fan
 
 
 Install Neovim (but Vim should also work for this guide). It might already be on your Linux computer.
-You will also need an installation of Python, and a library called `mwclient` from `pip`. 
+You will also need an installation of Python, and a library called `mwclient` from `pip`, as well as a plugin manager. I chose Vim-Plug. 
 
 First, execute `pip install mwclient` in your terminal. If you are on Linux, use your package manager to install `nvim`. Otherwise, download the executable and install it.
 
-Then, open up your Neovim config at `.config/nvim/init.vim`[^1] and add this text at the top, replacing \<yourfandomwiki> with the wiki's URL and \<YourFandomUsername> with your username:[^2]
+Take the file from https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim and put it into `~/.local/share/nvim/site/autoload/plug.vim`.[^1]
+
+Then, open up your Neovim config at `.config/nvim/init.vim`[^2] and add this text at the top, replacing \<yourfandomwiki> with the wiki's URL and \<YourFandomUsername> with your username:[^3]
 
 ```vim
 call plug#begin()
@@ -35,10 +37,11 @@ Execute the `:PlugInstall` command in Neovim, and hit enter.
 Then, restart Neovim and execute `:MWRead Main Page` in the editor.
 You will be prompted for a password.
 
-After you have been authenticated, you can now edit on your wiki of choice![^3]
+After you have been authenticated, you can now edit on your wiki of choice![^4]
 To save your page back to the wiki, execute `:MWWrite`.
 Now, check out your edit with `:MWBrowse`!
 
-[^1]: On Windows, that will be `~\AppData\Local\nvim\init.vim`.
-[^2]: If you already have plugin management and you know what you're doing, you can add the plugins `https://github.com/aquach/vim-mediawiki-editor` for editing functionality and `https://github.com/chikamichi/mediawiki.vim` for syntax highlighting. 
-[^3]: You will need to reauthenticate when you close Neovim. You can add `let g:mediawiki_editor_password = "YourPassword"` to your config, but I can't recommend this.
+[^1]: On Windows, that will be `~\AppData\Local\nvim\autoload`.
+[^2]: On Windows, that will be `~\AppData\Local\nvim\init.vim`.
+[^3]: If you already have plugin management and you know what you're doing, you can add the plugins `https://github.com/aquach/vim-mediawiki-editor` for editing functionality and `https://github.com/chikamichi/mediawiki.vim` for syntax highlighting. 
+[^4]: You will need to reauthenticate when you close Neovim. You can add `let g:mediawiki_editor_password = "YourPassword"` to your config, but I can't recommend this.
