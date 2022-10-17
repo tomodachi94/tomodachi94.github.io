@@ -1,6 +1,6 @@
 baseURL = "https://tomodachi94.github.io/"
 languageCode = "en-us"
 title = "Tomodachi94's Musings"
-copyright = "© 2022, Tomodachi94. All Rights Reserved unless explicitly stated."
+copyright = "Copyright © 2022, Tomodachi94. All Rights Reserved unless explicitly stated."
 
 theme = "hugo-bearblog"
