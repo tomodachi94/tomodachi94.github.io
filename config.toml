@@ -4,3 +4,5 @@ title = "Tomodachi94's Musings"
 copyright = "Copyright © 2022, Tomodachi94. All Rights Reserved unless explicitly stated."
 
 theme = "hugo-bearblog"
+
+staticDir = ["static"]
