@@ -6,3 +6,6 @@ copyright = "Copyright © 2022, Tomodachi94. All Rights Reserved unless explicit
 theme = "hugo-bearblog"
 
 staticDir = ["static"]
+
+[outputs]
+home = ["HTML", "RSS"]
