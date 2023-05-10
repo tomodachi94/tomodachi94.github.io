@@ -7,6 +7,8 @@ theme = "hugo-bearblog"
 
 staticDir = ["static"]
 
+enableRobotsTXT = true
+
 [outputs]
 home = ["HTML", "RSS"]
 
