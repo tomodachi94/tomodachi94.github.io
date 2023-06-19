@@ -2,6 +2,10 @@
 title: "Nix quickstart guide"
 date: 2023-04-17
 draft: false
+comments:
+    host: floss.social
+    username: tomodachi94
+    id: 110573535034609447
 ---
 
 This guide helps you start quickly with using Nix as a package manager. This guide covers setting up, `nix-shell`, `nix-env -iA`, and Home Manager.
