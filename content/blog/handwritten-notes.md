@@ -3,6 +3,11 @@ title: "How I Transcribe Handwritten Notes Into Obsidian"
 date: 2022-01-17
 draft: false
 legacy_url: "https://tomodachi.writeas.com/tomodachi/how-i-transcribe-notes-in-obsidian/"
+categories:
+- "Obsidian"
+- "Handwritten notes"
+- "Cornell notes"
+- "Transcription"
 ---
 
 [Obsidian](https://obsidian.md) is a Markdown-based note taking tool focused on connections between notes. Today, I'll show you how I transcribe my handwritten [Cornell notes](https://en.wikipedia.org/wiki/Cornell_Notes) into a linkable web of thought.

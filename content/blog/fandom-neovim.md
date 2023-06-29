@@ -2,6 +2,11 @@
 title: "Editing Fandom wikis with Neovim"
 date: 2022-10-16
 draft: false
+categories: 
+- "Fandom"
+- "Neovim"
+- "mwclient"
+- "vim-mediawiki-editor"
 ---
 
 *This guide assumes you know how to insert text, move the cursor, and execute commands in Neovim.*
