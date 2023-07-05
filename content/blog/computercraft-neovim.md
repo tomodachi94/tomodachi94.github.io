@@ -3,6 +3,10 @@ title = "Setting up a development environment with Neovim and ComputerCraft"
 date = "2023-07-04T21:57:13-07:00"
 tags = ["guides", "neovim", "computercraft"]
 draft = false
+[comments]
+host = "floss.social"
+username = "tomodachi94"
+id = "110662845640480394"
 +++
 
 [ComputerCraft](https://tweaked.cc) is a Minecraft mod that adds programmable computers to the game. These computers are programmed with [Lua](https://lua.org), a scripting language written in C.
