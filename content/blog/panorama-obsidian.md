@@ -49,6 +49,12 @@ Meta is a place for anything that my vault needs to function. Examples include t
 
 Attachments is what it sounds like: Images. I only add an image to a note if I feel like it helps to explain a concept better.
 
+## This system isn't all-encompassing
+
+My system isn't an all-encompassing 'life OS'. Most notably, you'll notice there's no task management system or daily notes/journal system incorporated.
+
+My [Bullet Journal](https://en.wikipedia.org/wiki/Bullet_journal) is my task management system and my place for journalling. I enjoy the feel of paper, and my Bullet Journal is always accessible, even when PANoRAMA is not. My Bullet Journal also has a slight air of serenity to it, which my Obsidian vault does not. The BuJo is a little order-making machine, and PANoRAMA is a system for processing information, which are two different tasks in my mind.
+
 ## Please take inspiration, but don't use this
 
 This system has been battle-tested by myself for nearly a year. Emphasis on **myself**.
