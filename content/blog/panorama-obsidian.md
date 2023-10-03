@@ -53,7 +53,7 @@ Attachments is what it sounds like: Images. I only add an image to a note if I f
 
 This system has been battle-tested by myself for nearly a year. Emphasis on **myself**.
 I don't intend this system to be used *in situ* inside of your Obsidian vault.
-Instead, please *take inspriation* and build your system to fit your needs.
+Instead, please *take inspiration* and build your system to fit your needs.
 If our systems end up being identical, great! If not, also great! **As long as it works for you**.
 
 ## Bibliography
