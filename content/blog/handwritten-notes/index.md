@@ -14,7 +14,7 @@ categories:
 
 *Related: [Why You Should Take Notes By Hand](https://www.psychologytoday.com/us/blog/creative-leadership/201902/why-you-should-take-notes-hand)*
 
-![The layout of notes taken using the Cornell Method.](https://upload.wikimedia.org/wikipedia/commons/4/4f/NotesCornell.png)
+![The layout of notes taken using the Cornell Method.](./cnotes_example.png)
 
 *Image courtesy of Icez~enwikibooks at English Wikibooks, Public domain, via Wikimedia Commons*
 
