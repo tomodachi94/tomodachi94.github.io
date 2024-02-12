@@ -14,21 +14,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: 'latest'
-          # extended: true
+    - name: Install Nix
+      uses: cachix/install-nix-action@v15
+      with:
+        nix_version: 'latest'
 
-      - name: Build
-        run: hugo --minify
+    - name: Build with Nix
+      run: |
+        # Ensure the binary cache is populated
+        echo "cachix use nixpkgs" >> ~/.bashrc
+
+        # Load the Cachix binaries
+        source ~/.bashrc
+
+        # Build the Hugo website
+        nix build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./result
