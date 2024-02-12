@@ -35,7 +35,7 @@
           version = "0.1.0";
           src = ./.;
           nativeBuildInputs = [ pkgs.hugo self.packages.${system}.hugo-bearblog ];
-          buildPhase = "hugo";
+          buildPhase = "hugo --minify";
           configurePhase = "cp -r ${self.packages.${system}.hugo-bearblog} ./themes/hugo-bearblog";
           installPhase = "mv public $out";
         };
