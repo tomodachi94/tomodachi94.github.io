@@ -1,5 +1,3 @@
-# Source: https://gohugo.io/hosting-and-deployment/hosting-on-github/
-
 name: GitHub Pages
 
 on:
@@ -14,23 +12,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+          fetch-depth:  0    # Fetch all history for .GitInfo and .Lastmod
 
-    - name: Install Nix
-      uses: cachix/install-nix-action@v15
-      with:
-        nix_version: 'latest'
+      - name: Install Nix
+        uses: cachix/install-nix-action@v15
+        with:
+          nix_version: 'latest'
 
-    - name: Build with Nix
-      run: |
-        # Ensure the binary cache is populated
-        echo "cachix use nixpkgs" >> ~/.bashrc
+      - name: Build with Nix
+        run: |
+          # Ensure the binary cache is populated
+          echo "cachix use nixpkgs" >> ~/.bashrc
 
-        # Load the Cachix binaries
-        source ~/.bashrc
+          # Load the Cachix binaries
+          source ~/.bashrc
 
-        # Build the Hugo website
-        nix build
+          # Build the Hugo website
+          nix build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
