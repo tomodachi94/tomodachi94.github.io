@@ -5,40 +5,25 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     devenv.url = "github:cachix/devenv";
     flake-utils.url = "github:numtide/flake-utils";
+	tomodachi94.url = "github:tomodachi94/nur-packages";
   };
 
-  outputs = { self, nixpkgs, devenv, flake-utils, ... } @ inputs:
+  outputs = { self, nixpkgs, devenv, flake-utils, tomodachi94, ... } @ inputs:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+		tomopkgs = tomodachi94.packages.${system};
       in
       {
-        packages.hugo-bearblog = pkgs.stdenv.mkDerivation rec {
-          pname = "hugo-bearblog";
-          version = "2024-01-23";
-          src = pkgs.fetchFromGitHub {
-            owner = "janraasch";
-            repo = "hugo-bearblog";
-            rev = "0b64d5ad103c716da5a79b48855f1489f6738ba7";
-            hash = "sha256-cyMWdCIZJV6zyIEgg3jbPV1BfDO4eRUY8pP6PmDfY6Y=";
-          };
-          phases = [ "installPhase" ];
-          installPhase = ''
-            mkdir $out
-            cp $src/theme.toml $out
-            cp -r $src/layouts $out
-            cp -r $src/archetypes $out
-          '';
-        };
         packages.hugo-website = pkgs.stdenv.mkDerivation rec {
           pname = "hugo-website";
           version = "0.1.0";
           src = ./.;
-          nativeBuildInputs = [ pkgs.hugo self.packages.${system}.hugo-bearblog ];
+          nativeBuildInputs = [ pkgs.hugo tomopkgs.hugo-bearblog ];
           buildPhase = "hugo --minify";
           configurePhase = ''
             mkdir ./themes
-            cp -r ${self.packages.${system}.hugo-bearblog} ./themes/hugo-bearblog
+            cp -r ${tomopkgs.hugo-bearblog} ./themes/hugo-bearblog
           '';
           installPhase = "mv public $out";
         };
