@@ -4,8 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     devenv.url = "github:cachix/devenv";
+	devenv.inputs.nixpkgs.follows = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
 	tomodachi94.url = "github:tomodachi94/nur-packages";
+	tomodachi94.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, devenv, flake-utils, tomodachi94, ... } @ inputs:
