@@ -16,6 +16,6 @@ As far as programming languages, I use [Python](https://python.org) and [Lua](ht
 
 ## How can I talk to you?
 
-I'm on <a rel="me" href="https://floss.social/@tomodachi94">Mastodon</a>, [Matrix](https://matrix.to/#/@tomodachi94:matrix.org), and [GitHub](https://github.com/tomodachi94). On most websites I use the handle `tomodachi94`, so there's a good chance you're talking to me if someone is using that handle. (If you're unsure, I usually provide links to my Mastodon and Matrix accounts to make things clearer.)
+I'm on <a rel="me" href="https://floss.social/@tomodachi94">Mastodon</a>, [Matrix](https://matrix.to/#/@tomodachi94:matrix.org), and [GitHub](https://github.com/tomodachi94). On most websites I use the handle `tomodachi94`, so there's a good chance you're talking to me if someone is using that handle. (If you're unsure, I usually provide links to my Mastodon and Matrix accounts to make things clearer.) I also have [a PGP key](/tomodachi94.asc).
 
 Please don't use the links above for bug reports or feature requests; file an issue in the respective GitHub project instead.
