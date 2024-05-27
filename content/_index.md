@@ -10,7 +10,7 @@ I occasionally help out with [ArchiveTeam](https://archiveteam.org), especially 
 
 ## What tech do you use?
 
-I'm a diehard Linux Mint user (but I plan on switching to NixOS when I have the time!). I use [Neovim](https://neovim.io) as my day-to-day editor, and I use [Vivaldi](https://vivaldi.com) as my preferred browser. I use [the i3 window manager](https://i3wm.org/). My configurations for most of these programs is made publically available [on GitHub](https://github.com/tomodachi94/dotfiles).
+I'm a NixOS user. I use [Neovim](https://neovim.io) as my day-to-day editor, and I use [Vivaldi](https://vivaldi.com) as my preferred browser. I use [the i3 window manager](https://i3wm.org/). My configurations for most of these programs is made publically available [on GitHub](https://github.com/tomodachi94/dotfiles).
 
 As far as programming languages, I use [Python](https://python.org) and [Lua](https://lua.org), and I'm trying to learn [Rust](https://rust-lang.org).
 
