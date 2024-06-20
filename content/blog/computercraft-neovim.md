@@ -1,7 +1,8 @@
 +++
 title = "Setting up a development environment with Neovim and ComputerCraft"
 date = "2023-07-04T21:57:13-07:00"
-tags = ["guides", "neovim", "computercraft"]
+tags = ["Neovim", "ComputerCraft"]
+categories = ["Guides"]
 draft = false
 [comments]
 host = "floss.social"

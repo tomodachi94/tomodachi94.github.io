@@ -6,10 +6,11 @@ comments:
     host: floss.social
     username: tomodachi94
     id: 110573535034609447
-categories:
+tags:
 - "Nix"
 - "Home-Manager"
 - "Nixpkgs"
+categories:
 - "Guides"
 ---
 
