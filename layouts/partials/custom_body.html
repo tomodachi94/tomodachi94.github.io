@@ -1,3 +1,5 @@
+<i></i>
+
 <script data-goatcounter="https://tomodachi94.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 
 {{ with .Params.comments }}
@@ -100,7 +102,7 @@
                 document.getElementById('mastodon-comments-list').appendChild(DOMPurify.sanitize(mastodonComment, {'RETURN_DOM_FRAGMENT': true}));
               });
           } else {
-            document.getElementById('mastodon-comments-list').innerHTML = "<p>Not comments found</p>";
+            document.getElementById('mastodon-comments-list').innerHTML = "<p>No comments found</p>";
           }
         });
       });
