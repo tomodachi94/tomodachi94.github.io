@@ -258,16 +258,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1708837694,
-        "narHash": "sha256-cTRKOeqFtFeo09/GDafVY1pjrFzGWsUqpIhA7W5+ei0=",
+        "dir": "pkgs",
+        "lastModified": 1718760200,
+        "narHash": "sha256-XW2xXM4WoWB0wt8nVUeWEo99Yl8/Dv+078lWZarxMks=",
         "owner": "tomodachi94",
-        "repo": "nur-packages",
-        "rev": "482216da82e1f5e3d16638823ed567c4e4ab8b9c",
+        "repo": "dotfiles",
+        "rev": "6609a2f242ab79b48139cadf09d12e2d8e4e0f12",
         "type": "github"
       },
       "original": {
+        "dir": "pkgs",
         "owner": "tomodachi94",
-        "repo": "nur-packages",
+        "repo": "dotfiles",
         "type": "github"
       }
     }
