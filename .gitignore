@@ -2,3 +2,5 @@ public/
 result
 .direnv/
 .devenv/
+# Automatically created
+themes/hugo-bearblog

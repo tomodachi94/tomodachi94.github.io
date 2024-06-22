@@ -25,15 +25,21 @@
         nativeBuildInputs = [ pkgs.hugo tomopkgs.packages.${pkgs.system}.hugo-bearblog ];
         buildPhase = "hugo --minify";
         configurePhase = ''
+		  rm -rf ./themes
           mkdir ./themes
-          cp -r ${tomopkgs.packages.${pkgs.system}.hugo-bearblog} ./themes/hugo-bearblog
+          ln -s ${tomopkgs.packages.${pkgs.system}.hugo-bearblog} ./themes/hugo-bearblog
         '';
         installPhase = "mv public $out";
       };
     });
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShellNoCC {
-        packages = with pkgs; [ pkgs.hugo ];
+        packages = with pkgs; [ hugo lychee ];
+		shellHook = ''
+		  rm -rf ./themes
+		  mkdir -p ./themes
+          ln -s ${tomopkgs.packages.${pkgs.system}.hugo-bearblog}/ ./themes/hugo-bearblog
+		'';
 	  };
 	});
   };
