@@ -12,7 +12,7 @@ id = "110662845640480394"
 
 [ComputerCraft](https://tweaked.cc) is a Minecraft mod that adds programmable computers to the game. These computers are programmed with [Lua](https://lua.org), a scripting language written in C.
 
-[Neovim](https://neovim.io) is a fork of the [Vim](https://vim.org) text editor; it adds configuration with Lua and language server support, among other things, to the classic Vim editor.
+[Neovim](https://neovim.io) is a fork of the [Vim](https://www.vim.org) text editor; it adds configuration with Lua and language server support, among other things, to the classic Vim editor.
 
 In this guide, I'll be walking you through setting up a tolerable IDE-like environment for ComputerCraft in Neovim, similar to Visual Studio Code's IntelliSense.
 
