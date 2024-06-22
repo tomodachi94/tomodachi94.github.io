@@ -2,7 +2,7 @@
 title: "How I Transcribe Handwritten Notes Into Obsidian"
 date: 2022-01-17
 draft: false
-legacy_url: "https://tomodachi.writeas.com/tomodachi/how-i-transcribe-notes-in-obsidian/"
+legacy_url: "https://tomodachi.writeas.com/how-i-transcribe-notes-in-obsidian/"
 tags:
 - "Obsidian"
 - "Handwritten notes"
