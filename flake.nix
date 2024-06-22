@@ -17,7 +17,7 @@
 		"x86_64-darwin"
         "aarch64-darwin"
       ] (system: function nixpkgs.legacyPackages.${system});
-  in {
+  in rec {
     packages = forAllSystems (pkgs: {
 	  default = pkgs.stdenvNoCC.mkDerivation rec {
         name = "hugo-website";
@@ -34,7 +34,8 @@
     });
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShellNoCC {
-        packages = with pkgs; [ hugo lychee ];
+        packages = with pkgs; [ just lychee ];
+		inputsFrom = [ packages.${pkgs.system}.default ];
 		shellHook = ''
 		  rm -rf ./themes
 		  mkdir -p ./themes
