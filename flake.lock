@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "hugo-bearblog": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1712643678,
+        "narHash": "sha256-9Wk0VAGh7mIE8hyLBWWpNtmm2gDb/LfsnQT0tCnlK1I=",
+        "owner": "janraasch",
+        "repo": "hugo-bearblog",
+        "rev": "efc24bc5e95f0ccb88051e1a7d95e8a1404e953e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "janraasch",
+        "repo": "hugo-bearblog",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1688392541,
@@ -18,30 +34,8 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
-        "tomopkgs": "tomopkgs"
-      }
-    },
-    "tomopkgs": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "dir": "pkgs",
-        "lastModified": 1718760200,
-        "narHash": "sha256-XW2xXM4WoWB0wt8nVUeWEo99Yl8/Dv+078lWZarxMks=",
-        "owner": "tomodachi94",
-        "repo": "dotfiles",
-        "rev": "6609a2f242ab79b48139cadf09d12e2d8e4e0f12",
-        "type": "github"
-      },
-      "original": {
-        "dir": "pkgs",
-        "owner": "tomodachi94",
-        "repo": "dotfiles",
-        "type": "github"
+        "hugo-bearblog": "hugo-bearblog",
+        "nixpkgs": "nixpkgs"
       }
     }
   },

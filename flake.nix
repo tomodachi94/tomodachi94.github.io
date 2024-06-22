@@ -3,13 +3,13 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-	tomopkgs = {
-	  url = "github:tomodachi94/dotfiles?dir=pkgs";
-	  inputs.nixpkgs.follows = "nixpkgs";
+	hugo-bearblog = {
+      url = "github:janraasch/hugo-bearblog";
+	  flake = false;
 	};
   };
 
-  outputs = { nixpkgs, tomopkgs, ... }: let
+  outputs = { nixpkgs, hugo-bearblog, ... }: let
     forAllSystems = function:
       nixpkgs.lib.genAttrs [
         "x86_64-linux"
@@ -22,24 +22,24 @@
 	  default = pkgs.stdenvNoCC.mkDerivation rec {
         name = "hugo-website";
         src = ./.;
-        nativeBuildInputs = [ pkgs.hugo tomopkgs.packages.${pkgs.system}.hugo-bearblog ];
+        nativeBuildInputs = [ pkgs.hugo ];
         buildPhase = "hugo --minify";
         configurePhase = ''
 		  rm -rf ./themes
           mkdir ./themes
-          ln -s ${tomopkgs.packages.${pkgs.system}.hugo-bearblog} ./themes/hugo-bearblog
+          ln -s ${hugo-bearblog} ./themes/hugo-bearblog
         '';
         installPhase = "mv public $out";
       };
     });
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShellNoCC {
-        packages = with pkgs; [ lychee ];
+        packages = with pkgs; [ just lychee ];
 		inputsFrom = [ packages.${pkgs.system}.default ];
 		shellHook = ''
 		  rm -rf ./themes
 		  mkdir -p ./themes
-          ln -s ${tomopkgs.packages.${pkgs.system}.hugo-bearblog}/ ./themes/hugo-bearblog
+          ln -s ${hugo-bearblog} ./themes/hugo-bearblog
 		'';
 	  };
 	});
