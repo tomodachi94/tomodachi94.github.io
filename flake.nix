@@ -34,7 +34,7 @@
     });
     devShells = forAllSystems (pkgs: {
       default = pkgs.mkShellNoCC {
-        packages = with pkgs; [ just lychee ];
+        packages = with pkgs; [ lychee ];
 		inputsFrom = [ packages.${pkgs.system}.default ];
 		shellHook = ''
 		  rm -rf ./themes
