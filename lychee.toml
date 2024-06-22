@@ -1,0 +1,5 @@
+# NOTE: Always add comments explaining why you're adding an entry.
+exclude = [
+  # Network error: Too Many Requests
+  "^https://tomodachi94.goatcounter.com/count"
+]
