@@ -2,7 +2,7 @@
   description = "A flake for building my Hugo website";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 	hugo-bearblog = {
       url = "github:janraasch/hugo-bearblog";
 	  flake = false;
