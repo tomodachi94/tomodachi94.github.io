@@ -3,3 +3,5 @@ exclude = [
   # Network error: Too Many Requests
   "^https://tomodachi94.goatcounter.com/count"
 ]
+
+base = "https://tomodachi94.github.io"
