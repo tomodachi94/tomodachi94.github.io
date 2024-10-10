@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: 2024 Matthias Endler
+#
+# SPDX-License-Identifier: MIT OR Apache-2.0
+name: Links
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  pull_request:
+  push:
+  schedule:
+    - cron: "00 18 * * *"
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore lychee cache
+        uses: actions/cache@v4
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
+
+      - name: Link Checker
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: "--base . --cache --max-cache-age 1d ."
