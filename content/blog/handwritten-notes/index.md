@@ -10,6 +10,10 @@ tags:
 - "Transcription"
 categories:
 - "Guides"
+aliases:
+- "/tomodachi/how-i-transcribe-notes-in-obsidian"
+- "/how-i-transcribe-notes-in-obsidian"
+- "/blog/how-i-transcribe-notes-in-obsidian"
 ---
 
 [Obsidian](https://obsidian.md) is a Markdown-based note taking tool focused on connections between notes. Today, I'll show you how I transcribe my handwritten [Cornell notes](https://en.wikipedia.org/wiki/Cornell_Notes) into a linkable web of thought.
