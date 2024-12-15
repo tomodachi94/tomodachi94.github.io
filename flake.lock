@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "ai-robots-txt": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1733273750,
+        "narHash": "sha256-CHHfd7kpOO2GXy1rLXjMsa9qn9qb1rv6dlra2ly/oXU=",
+        "owner": "ai-robots-txt",
+        "repo": "ai.robots.txt",
+        "rev": "2036a68c1f6d5b217439976000e8f7162e2dbb3f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ai-robots-txt",
+        "repo": "ai.robots.txt",
+        "type": "github"
+      }
+    },
     "hugo-bearblog": {
       "flake": false,
       "locked": {
@@ -34,6 +50,7 @@
     },
     "root": {
       "inputs": {
+        "ai-robots-txt": "ai-robots-txt",
         "hugo-bearblog": "hugo-bearblog",
         "nixpkgs": "nixpkgs"
       }

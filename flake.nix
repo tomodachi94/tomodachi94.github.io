@@ -7,9 +7,13 @@
       url = "github:janraasch/hugo-bearblog";
 	  flake = false;
 	};
+    ai-robots-txt = {
+      url = "github:ai-robots-txt/ai.robots.txt";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, hugo-bearblog, ... }: let
+  outputs = { nixpkgs, hugo-bearblog, ai-robots-txt, ... }: let
     forAllSystems = function:
       nixpkgs.lib.genAttrs [
         "x86_64-linux"
@@ -29,7 +33,12 @@
           mkdir ./themes
           ln -s ${hugo-bearblog} ./themes/hugo-bearblog
         '';
-        installPhase = "mv public $out";
+        installPhase = ''
+	  echo "" >> "public/robots.txt"
+	  echo "# ai.robots.txt - Source: https://github.com/ai-robots-txt/ai.robots.txt" >> "public/robots.txt"
+          cat ${ai-robots-txt}/robots.txt >> "public/robots.txt"
+	  mv public $out
+	'';
       };
     });
     devShells = forAllSystems (pkgs: {

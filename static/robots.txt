@@ -1,12 +1,2 @@
 User-Agent: *
 Sitemap: https://tomodachi94.github.io/sitemap.xml
-
-# LLMs
-User-agent: ChatGPT-User
-Disallow: /
-User-agent: GPTBot
-Disallow: /
-User-agent: OAI-SearchBot
-Disallow: /
-User-agent: Google-Extended
-Disallow: /
