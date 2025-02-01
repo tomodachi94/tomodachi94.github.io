@@ -3,11 +3,11 @@
     "ai-robots-txt": {
       "flake": false,
       "locked": {
-        "lastModified": 1733273750,
-        "narHash": "sha256-CHHfd7kpOO2GXy1rLXjMsa9qn9qb1rv6dlra2ly/oXU=",
+        "lastModified": 1737420562,
+        "narHash": "sha256-OH6sp/Xh6+GIglB/wTcTPdT3Zy8V1G7VT0JSsyOMLIM=",
         "owner": "ai-robots-txt",
         "repo": "ai.robots.txt",
-        "rev": "2036a68c1f6d5b217439976000e8f7162e2dbb3f",
+        "rev": "9c060dee1c9cead8a3cb1092bdf8615cf33f3656",
         "type": "github"
       },
       "original": {
@@ -19,11 +19,11 @@
     "hugo-bearblog": {
       "flake": false,
       "locked": {
-        "lastModified": 1712643678,
-        "narHash": "sha256-9Wk0VAGh7mIE8hyLBWWpNtmm2gDb/LfsnQT0tCnlK1I=",
+        "lastModified": 1736528219,
+        "narHash": "sha256-dufWNIeb/DFZ9azOL5MwVUVZXjNl0og8eB6A0IvuFwI=",
         "owner": "janraasch",
         "repo": "hugo-bearblog",
-        "rev": "efc24bc5e95f0ccb88051e1a7d95e8a1404e953e",
+        "rev": "9b9ac1026f6332af5f822e49cfe3e5a51b09f5cc",
         "type": "github"
       },
       "original": {
@@ -34,11 +34,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1733935885,
-        "narHash": "sha256-xyiHLs6KJ1fxeGmcCxKjJE4yJknVJxbC8Y/ZRYyC8WE=",
+        "lastModified": 1738297584,
+        "narHash": "sha256-AYvaFBzt8dU0fcSK2jKD0Vg23K2eIRxfsVXIPCW9a0E=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5a48e3c2e435e95103d56590188cfed7b70e108c",
+        "rev": "9189ac18287c599860e878e905da550aa6dec1cd",
         "type": "github"
       },
       "original": {
