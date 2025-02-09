@@ -9,6 +9,10 @@ tags:
 - "Unit testing"
 - "Lua"
 - "Continuous integration"
+comments:
+    host: floss.social
+    username: tomodachi94
+    id: 113976370639461037
 categories:
 - "Guides"
 ---
