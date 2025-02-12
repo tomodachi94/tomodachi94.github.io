@@ -17,7 +17,7 @@ categories:
 - "Guides"
 ---
 
-[Unit testing is awesome](https://www.howtogeek.com/devops/what-is-unit-testing-and-why-is-it-important/) .
+[Unit testing is awesome](https://www.howtogeek.com/devops/what-is-unit-testing-and-why-is-it-important/).
 It helps you catch bugs early by ensuring all of the components of your program work as expected.
 
 **Note: This guide is targeted towards *experts* who have advanced knowledge of ComputerCraft and know a few things about unit tests.**
