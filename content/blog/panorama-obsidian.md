@@ -4,6 +4,8 @@ title: "My Obsidian System: PANoRAMA"
 draft: false
 ---
 
+**Note 4 August 2025: I have since abandoned this system. I may or may not write another piece once I have solidified a new system. I would also like to expand on the "Please take inspiration, but don't use this" section at a later date.** I am leaving this up mostly for posterity.**
+
 Hello! This is an abstract walkthrough of my PKM system that I use with Obsidian and Zotero.
 This is largely a mash-up of different systems, designed to fit *my* needs.
 
