@@ -1,0 +1,9 @@
+{{ range .Site.Menus.main.ByWeight }}
+  <a href="{{ .URL }}">{{ .Name }}</a>
+{{ end }}
+{{ with .Site.GetPage "section" "blog" }}
+  <a href="{{ .RelPermalink }}">Posts</a>
+{{ else }}
+  <a href="{{ relURL "blog/" }}">Posts</a>
+{{ end }}
+<a href='{{ relURL "index.xml" }}'>RSS</a>
