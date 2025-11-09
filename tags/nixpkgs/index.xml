@@ -1,7 +1,48 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nixpkgs on Tomodachi94's Musings</title><link>https://tomodachi94.github.io/tags/nixpkgs/</link><description>Recent content in Nixpkgs on Tomodachi94's Musings</description><generator>Hugo</generator><language>en-us</language><copyright>Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated.</copyright><lastBuildDate>Tue, 11 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tomodachi94.github.io/tags/nixpkgs/index.xml" rel="self" type="application/rss+xml"/><item><title>grsecurity in Nixpkgs: an obituary (or: what was 'paxmark'?)</title><link>https://tomodachi94.github.io/blog/grsecurity-nixpkgs-paxmark/</link><pubDate>Tue, 11 Feb 2025 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/grsecurity-nixpkgs-paxmark/</guid><description>&lt;p&gt;This post aims to provide a bunch of historical background around &lt;a href="https://pax.grsecurity.net/"&gt;PaX&lt;/a&gt; and &lt;a href="https://grsecurity.net"&gt;grsecurity&lt;/a&gt; support in Nixpkgs.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Nixpkgs on Tomodachi94's Musings</title><link>https://tomodachi94.github.io/tags/nixpkgs/</link><description>Recent content in Nixpkgs on Tomodachi94's Musings</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated.</copyright><lastBuildDate>Tue, 11 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tomodachi94.github.io/tags/nixpkgs/index.xml" rel="self" type="application/rss+xml"/><item><title>grsecurity in Nixpkgs: an obituary (or: what was 'paxmark'?)</title><link>https://tomodachi94.github.io/blog/grsecurity-nixpkgs-paxmark/</link><pubDate>Tue, 11 Feb 2025 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/grsecurity-nixpkgs-paxmark/</guid><description>&lt;p&gt;This post aims to provide a bunch of historical background around &lt;a href="https://pax.grsecurity.net/"&gt;PaX&lt;/a&gt; and &lt;a href="https://grsecurity.net"&gt;grsecurity&lt;/a&gt; support in Nixpkgs.
 It is fairly abstract and can probably be digested by non-Nix people with ease.&lt;/p&gt;
 &lt;p&gt;This post is mostly focused on the implementation in Nixpkgs; I am not an expect in PaX/grsecurity (so if I&amp;rsquo;ve gotten something wrong, please correct me).&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;m also partially writing this so that people know what paxmark was, in case they encounter a reference to it.&lt;/p&gt;</description></item><item><title>Nix quickstart guide</title><link>https://tomodachi94.github.io/blog/nix-quickstart/</link><pubDate>Mon, 17 Apr 2023 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/nix-quickstart/</guid><description>&lt;p&gt;This guide helps you start quickly with using Nix as a package manager. This guide covers setting up, &lt;code&gt;nix-shell&lt;/code&gt;, &lt;code&gt;nix-env -iA&lt;/code&gt;, and Home Manager.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m also partially writing this so that people know what paxmark was, in case they encounter a reference to it.&lt;/p&gt;</description><content:encoded><![CDATA[<p>This post aims to provide a bunch of historical background around <a href="https://pax.grsecurity.net/">PaX</a> and <a href="https://grsecurity.net">grsecurity</a> support in Nixpkgs.
+It is fairly abstract and can probably be digested by non-Nix people with ease.</p>
+<p>This post is mostly focused on the implementation in Nixpkgs; I am not an expect in PaX/grsecurity (so if I&rsquo;ve gotten something wrong, please correct me).</p>
+<p>I&rsquo;m also partially writing this so that people know what paxmark was, in case they encounter a reference to it.</p>
+<h2 id="background">Background</h2>
+<p><a href="https://pax.grsecurity.net/">PaX</a> was an ecosystem of Linux patches and command-line tools which aimed to improve the security of Linux systems by <a href="https://pax.grsecurity.net/docs/pax.txt">making it more difficult to abuse arbitrary code injection attacks</a>.</p>
+<p>Development was initially started by the PaX team <a href="https://grsecurity.net/faq#paxgrsec">in 2000</a>, eventually being adopted into the grsecurity project.</p>
+<p>Development of standalone PaX ceased sometime in 2013, eventually becoming integrated into grsecurity. grsecurity <a href="https://grsecurity.net/passing_the_baton">ceased providing free Linux kernel patches and other grsecurity software in April 2017</a>.</p>
+<h2 id="the-rise-patches-submitted-to-nixpkgs">The rise: patches submitted to Nixpkgs</h2>
+<p>The grsecurity patches were <a href="https://github.com/NixOS/nixpkgs/commit/af2a12755113d8c1e1464fbe20ead31389a66e32">submitted to Nixpkgs in July 2013</a> by <a href="https://github.com/rbvermaa">Rob Vermaas</a> with the update to <a href="https://kernelnewbies.org/Linux_3.2">Linux 3.2</a>.</p>
+<p>Maintenance in 2013 and 2014 was primarily conducted by <a href="https://github.com/wizeman">wizeman</a> and <a href="https://github.com/Phreedom">Evgeny Egorochkin</a>, with <a href="https://github.com/thoughtpolice">Austin Seipp</a> starting to submit patches in 2014.
+Egorochkin stopped submitting patches in 2014.</p>
+<p>copumpkin and tg-x began submitting fixes in 2016.</p>
+<p>joachifm and wkennington began submitting patches regularly in 2015, continuing to do so until grsecurity&rsquo;s removal in 2018 (more on that later).
+wizeman continued to submit patches to grsecurity in Nixpkgs until mid-2015; after that, we saw a sharp decline in their activity in Nixpkgs.</p>
+<h2 id="the-middle-era-adding-support-to-more-packages-with-paxmark">The middle era: adding support to more packages with <code>paxmark</code></h2>
+<h3 id="what-is-paxmark">What is <code>paxmark</code>?</h3>
+<p>In short, <code>paxmark</code> was a wrapper formerly included in <code>stdenv</code> (and <a href="https://github.com/NixOS/nixpkgs/pull/52661">later moved to <code>paxctl</code>&rsquo;s setup hook</a>) which thinly wrapped <code>paxctl</code> with options that were commonly used at the time in Nixpkgs.</p>
+<p>Here&rsquo;s some documentation I wrote as part of a documentation campaign but never submitted to Nixpkgs (which <em>totally</em> isn&rsquo;t the reason I&rsquo;m writing this blog post at all, no no no <code>/sarc</code>):</p>
+<blockquote>
+<h4 id="paxctl">paxctl</h4>
+<p>This setup hook exposes a function, <code>paxmark</code>, which uses <code>paxctl</code> to manipulate the <a href="https://en.wikipedia.org/wiki/Executable-space_protection#PaX">PaX</a> flags in a standard way:</p>
+<ul>
+<li>Convert the headers from the old-style <code>PT_GNU_STACK</code> program header to the newer <code>PT_PAX_FLAGS</code> header.</li>
+<li>Reset all previous flags, then set the <code>NOEMUTRAMP</code> and <code>NORANDEXEC</code> flags.</li>
+</ul>
+</blockquote>
+<h3 id="paxmark-proliferation"><code>paxmark</code> proliferation</h3>
+<p>Packages which need some advanced memory management features need to be explicitly whitelisted in PaX.
+People started adding <code>paxmark</code> commands to packages <a href="https://github.com/NixOS/nixpkgs/commit/4f745ce8b27bbb3ca6fac8ad314bcc4bfd025f87">as early as 2014</a>, with roughly 60 packages containing <code>paxmark</code> by 2018.</p>
+<h2 id="the-decline-licensing-lockdown-removal-from-nixpkgs">The decline: licensing lockdown, removal from Nixpkgs</h2>
+<p>In 2017, grsecurity made the decision to change the licensing of their patches from GPL to a proprietary licensing arrangement, requiring payment.</p>
+<p>Support for the patches <a href="https://github.com/NixOS/nixpkgs/pull/25277">was promptly removed from Nixpkgs</a> based on concerns that we could no longer reliably support grsecurity.
+Similar moves were made by some other distributions; <a href="https://lwn.net/Articles/721848">LWN.net has an excellent overview</a> for the curious.</p>
+<p>Even after the patches were removed from Nixpkgs, much of its infrastructure and tooling lingered (with some things, like <a href="https://github.com/NixOS/nixpkgs/pull/118576/files">the removal of the grsecurity NixOS options</a>, <a href="https://github.com/NixOS/nixpkgs/pull/52983/commits/1b146a8c6f55b23981c3817d8346f95bb3a799fe">the <code>paxmark</code> function&rsquo;s removal from <code>stdenv</code></a> and then <a href="https://github.com/NixOS/nixpkgs/pull/349693">from Nixpkgs</a>, being removed piecemeal).
+Much of it was left in place with the hopes that a successor would take off, but I haven&rsquo;t noticed much activity on this.</p>
+<h2 id="a-successor">A successor?</h2>
+<p>In November 2024, <a href="https://thenewstack.io/openpax-a-new-linux-memory-security-patch-arrives/">OpenPaX</a> was released by Edera, a security company.
+OpenPaX intended to be an open-source replacement for grsecurity&rsquo;s PaX.</p>
+<p>Alpine Linux has <a href="https://pkgs.alpinelinux.org/package/edge/community/aarch64/linux-openpax">packaged the patches</a>; it&rsquo;s unclear if other distributions have done so.
+Nixpkgs does not have the patches available as of writing (February 2025).</p>
+]]></content:encoded></item><item><title>Nix quickstart guide</title><link>https://tomodachi94.github.io/blog/nix-quickstart/</link><pubDate>Mon, 17 Apr 2023 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/nix-quickstart/</guid><description>&lt;p&gt;This guide helps you start quickly with using Nix as a package manager. This guide covers setting up, &lt;code&gt;nix-shell&lt;/code&gt;, &lt;code&gt;nix-env -iA&lt;/code&gt;, and Home Manager.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s a quick way to get started with using Nix as a &lt;em&gt;package manager&lt;/em&gt; without diving into the complex internals:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Install Nix with &lt;code&gt;sh &amp;lt;(curl -L https://nixos.org/nix/install) --daemon&lt;/code&gt;. Make sure to add that snippet at the end to your shell configuration or you&amp;rsquo;ll have some trouble later.&lt;/li&gt;
@@ -10,4 +51,64 @@ It is fairly abstract and can probably be digested by non-Nix people with ease.&
 &lt;li&gt;Run &lt;code&gt;nix-env -iA pkgs.cowsay&lt;/code&gt; to add &lt;code&gt;cowsay&lt;/code&gt; into your path permanently. I don&amp;rsquo;t recommend this method if you use more than a few packages; see later bullet points about Home Manager.&lt;/li&gt;
 &lt;li&gt;Side note, if you want to search all of the packages in Nixpkgs, you can use the wonderful interface at &lt;a href="https://search.nixos.org"&gt;https://search.nixos.org&lt;/a&gt;. Make sure to select to &lt;code&gt;unstable&lt;/code&gt; channel in the switcher below the search bar.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;This is pretty much all you need to use Nix, but there are much better ways to ensure packages are installed and automatically put on &lt;code&gt;$PATH&lt;/code&gt;. Out of the solutions, I still prefer &lt;a href="https://github.com/nix-community/home-manager"&gt;Home Manager&lt;/a&gt; (abbreviated to HM).&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;This is pretty much all you need to use Nix, but there are much better ways to ensure packages are installed and automatically put on &lt;code&gt;$PATH&lt;/code&gt;. Out of the solutions, I still prefer &lt;a href="https://github.com/nix-community/home-manager"&gt;Home Manager&lt;/a&gt; (abbreviated to HM).&lt;/p&gt;</description><content:encoded><![CDATA[<p>This guide helps you start quickly with using Nix as a package manager. This guide covers setting up, <code>nix-shell</code>, <code>nix-env -iA</code>, and Home Manager.</p>
+<p>Here&rsquo;s a quick way to get started with using Nix as a <em>package manager</em> without diving into the complex internals:</p>
+<ul>
+<li>Install Nix with <code>sh &lt;(curl -L https://nixos.org/nix/install) --daemon</code>. Make sure to add that snippet at the end to your shell configuration or you&rsquo;ll have some trouble later.</li>
+<li>Run <code>nix-channel --update</code>. This is pretty much the same as <code>apt-get update</code>.</li>
+<li>Run <code>nix-shell -p cowsay</code>. This downloads <code>cowsay</code> into your <em>Nix Store</em> (at <code>/nix/store</code>) and then modifies your <code>$PATH</code> and other variables to make it executable in your shell. Run <code>cowsay 'Hello Nix!'</code> to test it out; it should behave the same.</li>
+<li>Run <code>nix-env -iA pkgs.cowsay</code> to add <code>cowsay</code> into your path permanently. I don&rsquo;t recommend this method if you use more than a few packages; see later bullet points about Home Manager.</li>
+<li>Side note, if you want to search all of the packages in Nixpkgs, you can use the wonderful interface at <a href="https://search.nixos.org">https://search.nixos.org</a>. Make sure to select to <code>unstable</code> channel in the switcher below the search bar.</li>
+</ul>
+<p>This is pretty much all you need to use Nix, but there are much better ways to ensure packages are installed and automatically put on <code>$PATH</code>. Out of the solutions, I still prefer <a href="https://github.com/nix-community/home-manager">Home Manager</a> (abbreviated to HM).</p>
+<h2 id="home-manager">Home Manager</h2>
+<p>HM is a configuration management system that can also manipulate your <code>$PATH</code> and other things.</p>
+<p>Here&rsquo;s a quick way to start using HM:</p>
+<ul>
+<li>Install HM with <code>nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager</code>, then update your channels with <code>nix-channel --update</code>. If you see something being &lsquo;built&rsquo;, that is perfectly normal. You&rsquo;ll also need to run <code>nix-shell '&lt;home-manager&gt;' -A install</code> to complete the installation.</li>
+<li>Add <code>. $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh</code> to your <code>.bashrc</code>/<code>.zshrc</code> to ensure binaries are added to the <code>$PATH</code>. Relaunch your shell afterwards.</li>
+<li>You&rsquo;ll need to <code>mkdir ~/.config/home-manager</code>, then run <code>$EDITOR ~/.config/home-manager/home.nix</code>. Add this snippet to start:</li>
+</ul>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nix" data-lang="nix"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>{ environment<span style="color:#666">,</span> config<span style="color:#666">,</span> pkgs<span style="color:#666">,</span> lib<span style="color:#666">,</span> <span style="color:#666">...</span> }:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>{
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>  <span style="color:#60a0b0;font-style:italic"># Home-Manager needs to know who you are, which is why I use `me` as my username</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>  home<span style="color:#666">.</span>username <span style="color:#666">=</span> <span style="color:#4070a0">&#34;me&#34;</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>  home<span style="color:#666">.</span>homeDirectory <span style="color:#666">=</span> <span style="color:#4070a0">&#34;/home/me&#34;</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>  <span style="color:#60a0b0;font-style:italic"># Remove this if you are on Darwin or some non-Linux platform</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>  targets<span style="color:#666">.</span>genericLinux<span style="color:#666">.</span>enable <span style="color:#666">=</span> <span style="color:#60add5">true</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>  <span style="color:#60a0b0;font-style:italic"># Here&#39;s the fun part!</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>  home<span style="color:#666">.</span>packages <span style="color:#666">=</span> [
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>    pkgs<span style="color:#666">.</span>git <span style="color:#60a0b0;font-style:italic"># Version control</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>    pkgs<span style="color:#666">.</span>neovim <span style="color:#60a0b0;font-style:italic"># Text editor</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>    pkgs<span style="color:#666">.</span>exa <span style="color:#60a0b0;font-style:italic"># Better ls</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>    pkgs<span style="color:#666">.</span>fd <span style="color:#60a0b0;font-style:italic"># Better find</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>    pkgs<span style="color:#666">.</span>ripgrep <span style="color:#60a0b0;font-style:italic"># Better grep</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>    pkgs<span style="color:#666">.</span>fzf <span style="color:#60a0b0;font-style:italic"># Better fuzzy finder</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>    pkgs<span style="color:#666">.</span>bat <span style="color:#60a0b0;font-style:italic"># Better cat</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>	pkgs<span style="color:#666">.</span>zathura <span style="color:#60a0b0;font-style:italic"># PDF reader</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>    pkgs<span style="color:#666">.</span>starship <span style="color:#60a0b0;font-style:italic"># Shell prompt</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>    pkgs<span style="color:#666">.</span>atuin <span style="color:#60a0b0;font-style:italic"># Better shell history</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>  ];
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>}</span></span></code></pre></div><ul>
+<li>This is all you need to start. I recommend removing some of the packages that I have filled and replace them with some of your own tools that you use on a daily basis.</li>
+<li>Update your HM configuration with <code>home-manager switch</code>. You&rsquo;ll notice some stuff being downloaded and eventually you will return to your shell.</li>
+<li>Try out your new packages!</li>
+<li>There is also a way to configure things with Home Manager; I will cover that in another guide since that is out of scope for this one.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<p>If Nix seems interesting and you want to learn the internals, I recommend the following resources:</p>
+<ul>
+<li><a href="https://zero-to-nix.com">Zero to Nix</a> is a great resource explaining a lot of Nix concepts. This is my go-to resource for most things Nix.</li>
+<li><a href="https://nixos.org/manual/nixpkgs/stable/">The Nixpkgs manual</a>. I cannot recommend this enough, especially once you want to create your own packages.</li>
+<li>The <a href="https://nix-community.github.io/home-manager/">Home Manager manual</a> for HM-related things.</li>
+<li>Again, the <a href="https://search.nixos.org">Nixpkgs package search</a> for finding packages.</li>
+</ul>
+]]></content:encoded></item></channel></rss>

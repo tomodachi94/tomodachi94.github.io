@@ -1,3 +1,50 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Neovim on Tomodachi94's Musings</title><link>https://tomodachi94.github.io/tags/neovim/</link><description>Recent content in Neovim on Tomodachi94's Musings</description><generator>Hugo</generator><language>en-us</language><copyright>Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated.</copyright><lastBuildDate>Tue, 04 Jul 2023 21:57:13 -0700</lastBuildDate><atom:link href="https://tomodachi94.github.io/tags/neovim/index.xml" rel="self" type="application/rss+xml"/><item><title>Setting up a development environment with Neovim and ComputerCraft</title><link>https://tomodachi94.github.io/blog/computercraft-neovim/</link><pubDate>Tue, 04 Jul 2023 21:57:13 -0700</pubDate><guid>https://tomodachi94.github.io/blog/computercraft-neovim/</guid><description>&lt;p&gt;&lt;a href="https://tweaked.cc"&gt;ComputerCraft&lt;/a&gt; is a Minecraft mod that adds programmable computers to the game. These computers are programmed with &lt;a href="https://lua.org"&gt;Lua&lt;/a&gt;, a scripting language written in C.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Neovim on Tomodachi94's Musings</title><link>https://tomodachi94.github.io/tags/neovim/</link><description>Recent content in Neovim on Tomodachi94's Musings</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated.</copyright><lastBuildDate>Tue, 04 Jul 2023 21:57:13 -0700</lastBuildDate><atom:link href="https://tomodachi94.github.io/tags/neovim/index.xml" rel="self" type="application/rss+xml"/><item><title>Setting up a development environment with Neovim and ComputerCraft</title><link>https://tomodachi94.github.io/blog/computercraft-neovim/</link><pubDate>Tue, 04 Jul 2023 21:57:13 -0700</pubDate><guid>https://tomodachi94.github.io/blog/computercraft-neovim/</guid><description>&lt;p&gt;&lt;a href="https://tweaked.cc"&gt;ComputerCraft&lt;/a&gt; is a Minecraft mod that adds programmable computers to the game. These computers are programmed with &lt;a href="https://lua.org"&gt;Lua&lt;/a&gt;, a scripting language written in C.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://neovim.io"&gt;Neovim&lt;/a&gt; is a fork of the &lt;a href="https://www.vim.org"&gt;Vim&lt;/a&gt; text editor; it adds configuration with Lua and language server support, among other things, to the classic Vim editor.&lt;/p&gt;
-&lt;p&gt;In this guide, I&amp;rsquo;ll be walking you through setting up a tolerable IDE-like environment for ComputerCraft in Neovim, similar to Visual Studio Code&amp;rsquo;s IntelliSense.&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;In this guide, I&amp;rsquo;ll be walking you through setting up a tolerable IDE-like environment for ComputerCraft in Neovim, similar to Visual Studio Code&amp;rsquo;s IntelliSense.&lt;/p&gt;</description><content:encoded><![CDATA[<p><a href="https://tweaked.cc">ComputerCraft</a> is a Minecraft mod that adds programmable computers to the game. These computers are programmed with <a href="https://lua.org">Lua</a>, a scripting language written in C.</p>
+<p><a href="https://neovim.io">Neovim</a> is a fork of the <a href="https://www.vim.org">Vim</a> text editor; it adds configuration with Lua and language server support, among other things, to the classic Vim editor.</p>
+<p>In this guide, I&rsquo;ll be walking you through setting up a tolerable IDE-like environment for ComputerCraft in Neovim, similar to Visual Studio Code&rsquo;s IntelliSense.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Basic Vim and Neovim skills.</li>
+<li>Basic comprehension of Lua (needed for configuring Neovim).</li>
+<li><code>nvim</code> and <code>git</code> installed.</li>
+<li><code>nvim-cmp</code> setup and working. That is slightly out-of-scope for this guide; I recommend <a href="https://vonheikemen.github.io/devlog/tools/setup-nvim-lspconfig-plus-nvim-cmp/">Heiker Curiel&rsquo;s guide</a> for getting this working.</li>
+<li>The following Neovim plugins, installed with your plugin manager of choice:
+<ul>
+<li><a href="https://github.com/neovim/nvim-lspconfig"><code>nvim-lspconfig</code></a>, for automatically setting up the Neovim LSP consumer for common LSP servers.</li>
+<li><a href="https://github.com/williamboman/mason.nvim"><code>mason</code></a>, for installing and managing other bits of software, including LSP servers.</li>
+<li><a href="https://github.com/williamboman/mason-lspconfig.nvim"><code>mason-lspconfig</code></a>, for gluing together <code>mason</code> and <code>nvim-lspconfig</code>.</li>
+<li>&hellip;and whatever plugins you need for <code>nvim-cmp</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="setting-up-lua-language-server-and-the-cc-tweaked-addon">Setting up <code>lua-language-server</code> and the <code>cc-tweaked</code> addon</h2>
+<p>After you&rsquo;ve installed Mason, install the <code>lua-language-server</code> with Mason and ensures that <code>nvim-lspconfig</code> knows about it:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>:MasonInstall lua-language-server</span></span></code></pre></div><p>Then, clone the <code>lua-language-server</code> plugins with Git:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>$ git clone https://github.com/LuaLS/LLS-Addons ~/LLS-Addons --recurse-submodules --shallow-submodules --depth<span style="color:#666">=</span><span style="color:#40a070">1</span></span></span></code></pre></div><p>Afterwards, create a <code>.luarc.json</code> file in your project&rsquo;s root directory with the following contents:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>{
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>    <span style="color:#062873;font-weight:bold">&#34;workspace.library&#34;</span>: [<span style="color:#4070a0">&#34;/home/me/LLS-Addons/addons/cc-tweaked&#34;</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>}</span></span></code></pre></div><p>(Don&rsquo;t forget to replace <code>me</code> with your username!)</p>
+<p>Launch Neovim and try it out:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>$ nvim some-cool-cc-project.lua</span></span></code></pre></div><p>Voila! Your faux IntelliSense should now be working!</p>
+]]></content:encoded></item></channel></rss>

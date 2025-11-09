@@ -1,16 +1,263 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Tomodachi94's Musings</title><link>https://tomodachi94.github.io/blog/</link><description>Recent content in Blog on Tomodachi94's Musings</description><generator>Hugo</generator><language>en-us</language><copyright>Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated.</copyright><lastBuildDate>Tue, 11 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tomodachi94.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>grsecurity in Nixpkgs: an obituary (or: what was 'paxmark'?)</title><link>https://tomodachi94.github.io/blog/grsecurity-nixpkgs-paxmark/</link><pubDate>Tue, 11 Feb 2025 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/grsecurity-nixpkgs-paxmark/</guid><description>&lt;p&gt;This post aims to provide a bunch of historical background around &lt;a href="https://pax.grsecurity.net/"&gt;PaX&lt;/a&gt; and &lt;a href="https://grsecurity.net"&gt;grsecurity&lt;/a&gt; support in Nixpkgs.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Blog on Tomodachi94's Musings</title><link>https://tomodachi94.github.io/blog/</link><description>Recent content in Blog on Tomodachi94's Musings</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated.</copyright><lastBuildDate>Tue, 11 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tomodachi94.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>grsecurity in Nixpkgs: an obituary (or: what was 'paxmark'?)</title><link>https://tomodachi94.github.io/blog/grsecurity-nixpkgs-paxmark/</link><pubDate>Tue, 11 Feb 2025 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/grsecurity-nixpkgs-paxmark/</guid><description>&lt;p&gt;This post aims to provide a bunch of historical background around &lt;a href="https://pax.grsecurity.net/"&gt;PaX&lt;/a&gt; and &lt;a href="https://grsecurity.net"&gt;grsecurity&lt;/a&gt; support in Nixpkgs.
 It is fairly abstract and can probably be digested by non-Nix people with ease.&lt;/p&gt;
 &lt;p&gt;This post is mostly focused on the implementation in Nixpkgs; I am not an expect in PaX/grsecurity (so if I&amp;rsquo;ve gotten something wrong, please correct me).&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;m also partially writing this so that people know what paxmark was, in case they encounter a reference to it.&lt;/p&gt;</description></item><item><title>Unit testing with ComputerCraft, McFly, and CraftOS-PC</title><link>https://tomodachi94.github.io/blog/computercraft-mcfly-testing/</link><pubDate>Sun, 09 Feb 2025 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/computercraft-mcfly-testing/</guid><description>&lt;p&gt;&lt;a href="https://www.howtogeek.com/devops/what-is-unit-testing-and-why-is-it-important/"&gt;Unit testing is awesome&lt;/a&gt;.
+&lt;p&gt;I&amp;rsquo;m also partially writing this so that people know what paxmark was, in case they encounter a reference to it.&lt;/p&gt;</description><content:encoded><![CDATA[<p>This post aims to provide a bunch of historical background around <a href="https://pax.grsecurity.net/">PaX</a> and <a href="https://grsecurity.net">grsecurity</a> support in Nixpkgs.
+It is fairly abstract and can probably be digested by non-Nix people with ease.</p>
+<p>This post is mostly focused on the implementation in Nixpkgs; I am not an expect in PaX/grsecurity (so if I&rsquo;ve gotten something wrong, please correct me).</p>
+<p>I&rsquo;m also partially writing this so that people know what paxmark was, in case they encounter a reference to it.</p>
+<h2 id="background">Background</h2>
+<p><a href="https://pax.grsecurity.net/">PaX</a> was an ecosystem of Linux patches and command-line tools which aimed to improve the security of Linux systems by <a href="https://pax.grsecurity.net/docs/pax.txt">making it more difficult to abuse arbitrary code injection attacks</a>.</p>
+<p>Development was initially started by the PaX team <a href="https://grsecurity.net/faq#paxgrsec">in 2000</a>, eventually being adopted into the grsecurity project.</p>
+<p>Development of standalone PaX ceased sometime in 2013, eventually becoming integrated into grsecurity. grsecurity <a href="https://grsecurity.net/passing_the_baton">ceased providing free Linux kernel patches and other grsecurity software in April 2017</a>.</p>
+<h2 id="the-rise-patches-submitted-to-nixpkgs">The rise: patches submitted to Nixpkgs</h2>
+<p>The grsecurity patches were <a href="https://github.com/NixOS/nixpkgs/commit/af2a12755113d8c1e1464fbe20ead31389a66e32">submitted to Nixpkgs in July 2013</a> by <a href="https://github.com/rbvermaa">Rob Vermaas</a> with the update to <a href="https://kernelnewbies.org/Linux_3.2">Linux 3.2</a>.</p>
+<p>Maintenance in 2013 and 2014 was primarily conducted by <a href="https://github.com/wizeman">wizeman</a> and <a href="https://github.com/Phreedom">Evgeny Egorochkin</a>, with <a href="https://github.com/thoughtpolice">Austin Seipp</a> starting to submit patches in 2014.
+Egorochkin stopped submitting patches in 2014.</p>
+<p>copumpkin and tg-x began submitting fixes in 2016.</p>
+<p>joachifm and wkennington began submitting patches regularly in 2015, continuing to do so until grsecurity&rsquo;s removal in 2018 (more on that later).
+wizeman continued to submit patches to grsecurity in Nixpkgs until mid-2015; after that, we saw a sharp decline in their activity in Nixpkgs.</p>
+<h2 id="the-middle-era-adding-support-to-more-packages-with-paxmark">The middle era: adding support to more packages with <code>paxmark</code></h2>
+<h3 id="what-is-paxmark">What is <code>paxmark</code>?</h3>
+<p>In short, <code>paxmark</code> was a wrapper formerly included in <code>stdenv</code> (and <a href="https://github.com/NixOS/nixpkgs/pull/52661">later moved to <code>paxctl</code>&rsquo;s setup hook</a>) which thinly wrapped <code>paxctl</code> with options that were commonly used at the time in Nixpkgs.</p>
+<p>Here&rsquo;s some documentation I wrote as part of a documentation campaign but never submitted to Nixpkgs (which <em>totally</em> isn&rsquo;t the reason I&rsquo;m writing this blog post at all, no no no <code>/sarc</code>):</p>
+<blockquote>
+<h4 id="paxctl">paxctl</h4>
+<p>This setup hook exposes a function, <code>paxmark</code>, which uses <code>paxctl</code> to manipulate the <a href="https://en.wikipedia.org/wiki/Executable-space_protection#PaX">PaX</a> flags in a standard way:</p>
+<ul>
+<li>Convert the headers from the old-style <code>PT_GNU_STACK</code> program header to the newer <code>PT_PAX_FLAGS</code> header.</li>
+<li>Reset all previous flags, then set the <code>NOEMUTRAMP</code> and <code>NORANDEXEC</code> flags.</li>
+</ul>
+</blockquote>
+<h3 id="paxmark-proliferation"><code>paxmark</code> proliferation</h3>
+<p>Packages which need some advanced memory management features need to be explicitly whitelisted in PaX.
+People started adding <code>paxmark</code> commands to packages <a href="https://github.com/NixOS/nixpkgs/commit/4f745ce8b27bbb3ca6fac8ad314bcc4bfd025f87">as early as 2014</a>, with roughly 60 packages containing <code>paxmark</code> by 2018.</p>
+<h2 id="the-decline-licensing-lockdown-removal-from-nixpkgs">The decline: licensing lockdown, removal from Nixpkgs</h2>
+<p>In 2017, grsecurity made the decision to change the licensing of their patches from GPL to a proprietary licensing arrangement, requiring payment.</p>
+<p>Support for the patches <a href="https://github.com/NixOS/nixpkgs/pull/25277">was promptly removed from Nixpkgs</a> based on concerns that we could no longer reliably support grsecurity.
+Similar moves were made by some other distributions; <a href="https://lwn.net/Articles/721848">LWN.net has an excellent overview</a> for the curious.</p>
+<p>Even after the patches were removed from Nixpkgs, much of its infrastructure and tooling lingered (with some things, like <a href="https://github.com/NixOS/nixpkgs/pull/118576/files">the removal of the grsecurity NixOS options</a>, <a href="https://github.com/NixOS/nixpkgs/pull/52983/commits/1b146a8c6f55b23981c3817d8346f95bb3a799fe">the <code>paxmark</code> function&rsquo;s removal from <code>stdenv</code></a> and then <a href="https://github.com/NixOS/nixpkgs/pull/349693">from Nixpkgs</a>, being removed piecemeal).
+Much of it was left in place with the hopes that a successor would take off, but I haven&rsquo;t noticed much activity on this.</p>
+<h2 id="a-successor">A successor?</h2>
+<p>In November 2024, <a href="https://thenewstack.io/openpax-a-new-linux-memory-security-patch-arrives/">OpenPaX</a> was released by Edera, a security company.
+OpenPaX intended to be an open-source replacement for grsecurity&rsquo;s PaX.</p>
+<p>Alpine Linux has <a href="https://pkgs.alpinelinux.org/package/edge/community/aarch64/linux-openpax">packaged the patches</a>; it&rsquo;s unclear if other distributions have done so.
+Nixpkgs does not have the patches available as of writing (February 2025).</p>
+]]></content:encoded></item><item><title>Unit testing with ComputerCraft, McFly, and CraftOS-PC</title><link>https://tomodachi94.github.io/blog/computercraft-mcfly-testing/</link><pubDate>Sun, 09 Feb 2025 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/computercraft-mcfly-testing/</guid><description>&lt;p&gt;&lt;a href="https://www.howtogeek.com/devops/what-is-unit-testing-and-why-is-it-important/"&gt;Unit testing is awesome&lt;/a&gt;.
 It helps you catch bugs early by ensuring all of the components of your program work as expected.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Note: This guide is targeted towards &lt;em&gt;experts&lt;/em&gt; who have advanced knowledge of ComputerCraft and know a few things about unit tests.&lt;/strong&gt;
 Experience with unit tests in another language is helpful too, but isn&amp;rsquo;t required.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://computercraft.cc"&gt;CC: Tweaked&lt;/a&gt; contains a little-known unit testing framework called &lt;strong&gt;McFly&lt;/strong&gt;, which describes itself as &amp;ldquo;a very basic test framework for ComputerCraft&amp;rdquo; drawing inspiration from the &lt;a href="https://lunarmodules.github.io/busted/"&gt;Busted&lt;/a&gt; framework for Lua.
-This post will function as an introduction to McFly, in the process providing instructions for running the tests inside of the &lt;a href="https://craftos-pc.cc"&gt;CraftOS-PC emulator&lt;/a&gt;, suitable for running in a continuous integration pipeline.&lt;/p&gt;</description></item><item><title>My Obsidian System: PANoRAMA</title><link>https://tomodachi94.github.io/blog/panorama-obsidian/</link><pubDate>Tue, 03 Oct 2023 21:18:14 +0000</pubDate><guid>https://tomodachi94.github.io/blog/panorama-obsidian/</guid><description>&lt;p&gt;&lt;strong&gt;Note 4 August 2025: I have since abandoned this system. I may or may not write another piece once I have solidified a new system. I would also like to expand on the &amp;ldquo;Please take inspiration, but don&amp;rsquo;t use this&amp;rdquo; section at a later date.&lt;/strong&gt; I am leaving this up mostly for posterity.**&lt;/p&gt;
+This post will function as an introduction to McFly, in the process providing instructions for running the tests inside of the &lt;a href="https://craftos-pc.cc"&gt;CraftOS-PC emulator&lt;/a&gt;, suitable for running in a continuous integration pipeline.&lt;/p&gt;</description><content:encoded><![CDATA[<p><a href="https://www.howtogeek.com/devops/what-is-unit-testing-and-why-is-it-important/">Unit testing is awesome</a>.
+It helps you catch bugs early by ensuring all of the components of your program work as expected.</p>
+<p><strong>Note: This guide is targeted towards <em>experts</em> who have advanced knowledge of ComputerCraft and know a few things about unit tests.</strong>
+Experience with unit tests in another language is helpful too, but isn&rsquo;t required.</p>
+<p><a href="https://computercraft.cc">CC: Tweaked</a> contains a little-known unit testing framework called <strong>McFly</strong>, which describes itself as &ldquo;a very basic test framework for ComputerCraft&rdquo; drawing inspiration from the <a href="https://lunarmodules.github.io/busted/">Busted</a> framework for Lua.
+This post will function as an introduction to McFly, in the process providing instructions for running the tests inside of the <a href="https://craftos-pc.cc">CraftOS-PC emulator</a>, suitable for running in a continuous integration pipeline.</p>
+<p>This post assumes you have a functional library or program that you want to test, located in a locally-cloned Git repository.
+It also assumes that you know how to write and execute shell scripts in Bash.</p>
+<p>This guide assumes you have a library, located at <code>my_library.lua</code>.</p>
+<h2 id="getting-mcfly">Getting McFly</h2>
+<p>McFly is available <a href="https://raw.githubusercontent.com/cc-tweaked/CC-Tweaked/refs/heads/mc-1.20.x/projects/core/src/test/resources/test-rom/mcfly.lua">through the CC: Tweaked GitHub repository</a>.
+Download it to a memorable location inside of your repository; we chose <code>test/mcfly.lua</code>.</p>
+<p><strong>Update 09 November 2025: If you use <a href="https://unicornpkg.madefor.cc">unicornpkg</a>, you can alternatively install it by running <code>hoof install mcfly</code>, which places it into <code>bin/mcfly.lua</code> on your computer.</strong></p>
+<h2 id="getting-craftos-pc">Getting CraftOS-PC</h2>
+<p>This guide assumes that you want to use CraftOS-PC to run the tests outside of the game.</p>
+<p>To install CraftOS-PC, follow the <a href="https://www.craftos-pc.cc/docs/installation">guide on its documentation</a>.
+(I&rsquo;m partial to Nix as a maintainer of its package, but I won&rsquo;t judge if you pick another method.)</p>
+<h2 id="make-a-simple-test">Make a simple test</h2>
+<p>Create a simple McFly test at <code>test/addition_spec.lua</code> (the <code>_spec</code> part is important). This will help us know if our setup works. Feel free to delete this file later once you have some tests.</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#60a0b0;font-style:italic">-- &#34;addition&#34; is the name of the component you&#39;re testing,</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#60a0b0;font-style:italic">-- usually a function.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>describe(<span style="color:#4070a0">&#34;addition&#34;</span>, <span style="color:#007020;font-weight:bold">function</span>()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>   it(<span style="color:#4070a0">&#34;adds two numbers correctly&#34;</span>, <span style="color:#007020;font-weight:bold">function</span>()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>     expect(<span style="color:#40a070">2</span> <span style="color:#666">+</span> <span style="color:#40a070">2</span>):equals(<span style="color:#40a070">4</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>   <span style="color:#007020;font-weight:bold">end</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span><span style="color:#007020;font-weight:bold">end</span>)</span></span></code></pre></div><h2 id="setting-up-the-testing-environment">Setting up the testing environment</h2>
+<p>CraftOS-PC has <a href="https://www.craftos-pc.cc/docs/cli">many CLI options</a>. The ones that interest us are <code>--directory</code>, <code>--headless</code>, and <code>--exec</code>.
+The first allows us to override CraftOS-PC&rsquo;s data directory, the second allows us to run CraftOS-PC without opening a GUI, and the third allows us to run arbitrary Lua code.</p>
+<p>Create a new shell script with the following contents. We named it <code>test/test.sh</code>, but feel free to name it something else or integrate it into a preexisting command running solution.</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#007020"></span><span style="color:#007020">set</span> -euo pipefail
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#60a0b0;font-style:italic"># This script is CC0; feel free to remove this notice and modify the script however you like, with or without attribution.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#60a0b0;font-style:italic"># Get the root of your Git repository, for copying files into the environment later.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="color:#bb60d5">SOURCE_DIR</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;</span><span style="color:#007020;font-weight:bold">$(</span>git rev-parse --show-toplevel<span style="color:#007020;font-weight:bold">)</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#60a0b0;font-style:italic"># Create a temporary directory for storing CraftOS-PC data.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#bb60d5">DATA_DIR</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;</span><span style="color:#007020;font-weight:bold">$(</span>mktemp -d<span style="color:#007020;font-weight:bold">)</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>mkdir -p <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$DATA_DIR</span><span style="color:#4070a0">/computer/0&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span><span style="color:#bb60d5">COMPUTER_DIR</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$DATA_DIR</span><span style="color:#4070a0">/computer/0&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span><span style="color:#60a0b0;font-style:italic"># Copy your library into the testing environment.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>cp <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$SOURCE_DIR</span><span style="color:#4070a0">/my_library.lua&#34;</span> <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$COMPUTER_DIR</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span><span style="color:#60a0b0;font-style:italic"># And your tests!</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>cp -r <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$SOURCE_DIR</span><span style="color:#4070a0">/test&#34;</span> <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$COMPUTER_DIR</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span><span style="color:#60a0b0;font-style:italic"># Run CraftOS-PC in headless mode (no GUI) and with the data directory set to $DATA_DIR.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>craftos --directory <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$DATA_DIR</span><span style="color:#4070a0">&#34;</span> --exec <span style="color:#4070a0">&#39;shell.run(&#34;test/mcfly.lua test&#34;); os.shutdown()&#39;</span></span></span></code></pre></div><p>Make sure to mark it executable with <code>chmod +x ./test/test.sh</code>.</p>
+<p>You should see something like this in your terminal when running <code>test/test.sh</code>:</p>
+
+
+
+
+
+<pre tabindex="0"><code>$ test/test.sh
+Ran 1 test(s), of which 1 passed (100%).</code></pre><p>Progress! We now have McFly running our tests whenever we run our script.</p>
+<h2 id="writing-our-tests">Writing our tests</h2>
+<p>All that&rsquo;s left to do is write our tests.</p>
+<p>I recommend incrementally writing tests for your code; if you try to write all of your tests all at once, <strong>you will burn out</strong> unless your library is very small.</p>
+<p>Tests come in this general format:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>describe(<span style="color:#4070a0">&#34;identify_sound&#34;</span>, <span style="color:#007020;font-weight:bold">function</span>()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>   it(<span style="color:#4070a0">&#34;can identify meow&#34;</span>, <span style="color:#007020;font-weight:bold">function</span>()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>     <span style="color:#60a0b0;font-style:italic">-- Load your library.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>     <span style="color:#007020;font-weight:bold">local</span> my_library <span style="color:#666">=</span> require(<span style="color:#4070a0">&#34;my_library&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>     expect(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>       <span style="color:#60a0b0;font-style:italic">-- Call your function with its parameters.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>       my_library.identify_sound(<span style="color:#4070a0">&#34;meow&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>     <span style="color:#60a0b0;font-style:italic">-- This is what you expect the result to be.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>     <span style="color:#60a0b0;font-style:italic">-- McFly has many of these functions; see the documentation in its source code for more.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>     ):equals(<span style="color:#4070a0">&#34;cat&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>   <span style="color:#007020;font-weight:bold">end</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span><span style="color:#007020;font-weight:bold">end</span>)</span></span></code></pre></div><p>McFly expects tests to be named in the format <code>*_spec.lua</code>.</p>
+<p>If you get an error about <code>require</code>, see the next section.</p>
+<h2 id="a-tangent-packagepath-and-require-failing-to-find-your-library">A tangent: <code>package.path</code> and <code>require</code> failing to find your library</h2>
+<p>Don&rsquo;t fret! If your tests fail to find your library, add this one-liner to the top of your test:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>package.path <span style="color:#666">=</span> <span style="color:#4070a0">&#34;/?.lua;/?/init.lua;&#34;</span> <span style="color:#666">..</span> package.path</span></span></code></pre></div><p>This one-liner prepends the root (<code>/</code>) directory to <a href="https://www.lua.org/manual/5.1/manual.html#pdf-require"><code>package.path</code>, which serves as the search path for <code>require</code></a>.</p>
+<h2 id="running-tests-in-github-actions">Running tests in GitHub Actions</h2>
+<p>This became a little bit tricky, because GitHub Actions&rsquo; Ubuntu runner does not contain a <code>libncurses5</code> library.</p>
+<p>I opted to <a href="https://github.com/unicornpkg/libunicornpkg/blob/cbc4beb8d2542beb016a145e44befa0360320797/.github/workflows/ci.yaml">use Nix when I was setting up testing for libunicornpkg</a>, but not everybody knows Nix so this isn&rsquo;t feasible for most people.</p>
+<p>If you manage to get something non-Nix working on GitHub Actions, please let me know!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Thanks for sticking with me through this abnormally large post!</p>
+<p>If something doesn&rsquo;t work, I got something wrong, or I left something important out, please reach out.</p>
+]]></content:encoded></item><item><title>My Obsidian System: PANoRAMA</title><link>https://tomodachi94.github.io/blog/panorama-obsidian/</link><pubDate>Tue, 03 Oct 2023 21:18:14 +0000</pubDate><guid>https://tomodachi94.github.io/blog/panorama-obsidian/</guid><description>&lt;p&gt;&lt;strong&gt;Note 4 August 2025: I have since abandoned this system. I may or may not write another piece once I have solidified a new system. I would also like to expand on the &amp;ldquo;Please take inspiration, but don&amp;rsquo;t use this&amp;rdquo; section at a later date.&lt;/strong&gt; I am leaving this up mostly for posterity.**&lt;/p&gt;
 &lt;p&gt;Hello! This is an abstract walkthrough of my PKM system that I use with Obsidian and Zotero.
-This is largely a mash-up of different systems, designed to fit &lt;em&gt;my&lt;/em&gt; needs.&lt;/p&gt;</description></item><item><title>Setting up a development environment with Neovim and ComputerCraft</title><link>https://tomodachi94.github.io/blog/computercraft-neovim/</link><pubDate>Tue, 04 Jul 2023 21:57:13 -0700</pubDate><guid>https://tomodachi94.github.io/blog/computercraft-neovim/</guid><description>&lt;p&gt;&lt;a href="https://tweaked.cc"&gt;ComputerCraft&lt;/a&gt; is a Minecraft mod that adds programmable computers to the game. These computers are programmed with &lt;a href="https://lua.org"&gt;Lua&lt;/a&gt;, a scripting language written in C.&lt;/p&gt;
+This is largely a mash-up of different systems, designed to fit &lt;em&gt;my&lt;/em&gt; needs.&lt;/p&gt;</description><content:encoded><![CDATA[<p><strong>Note 4 August 2025: I have since abandoned this system. I may or may not write another piece once I have solidified a new system. I would also like to expand on the &ldquo;Please take inspiration, but don&rsquo;t use this&rdquo; section at a later date.</strong> I am leaving this up mostly for posterity.**</p>
+<p>Hello! This is an abstract walkthrough of my PKM system that I use with Obsidian and Zotero.
+This is largely a mash-up of different systems, designed to fit <em>my</em> needs.</p>
+<h2 id="the-name">The name</h2>
+<p>In my mind, the system doesn&rsquo;t have a name, but I needed to name it <em>something</em> for this post, so I&rsquo;ve decided on <strong>PANoRAMA</strong>.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>Here&rsquo;s the folders:</p>
+<ul>
+<li><strong>P</strong>rojects: Short-term efforts with a specific final outcome. <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
+<li><strong>A</strong>reas: Long-term commitments requiring management in order to uphold a standard. <sup id="fnref1:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
+<li><strong>No</strong>tes: Long-term &lsquo;main&rsquo; notes, to be used in my writing. <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></li>
+<li><strong>R</strong>eferences: Notes taken during the act of reading. <sup id="fnref1:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></li>
+<li><strong>A</strong>rchive: Projects which are complete, irrelevant or obsolete areas, and fully processed reference notes. <sup id="fnref2:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
+<li><strong>M</strong>eta: Templates mostly. I needed a place for this kind of stuff, and &lsquo;meta&rsquo; sounded rather nice at the time.</li>
+<li><strong>A</strong>ttachments: Images and diagrams used in any of the folders listed above.</li>
+</ul>
+<p>Yes, this is a lot of folders, and each of them has a specific purpose and were only made after I determined a need for its existence.</p>
+<h2 id="para-inspired-projects-areas-archive">PARA-inspired: Projects, Areas, Archive</h2>
+<p>If you&rsquo;ve read Tiago Forte&rsquo;s Building a Second Brain, you most likely recognized these three folders.</p>
+<p>The truth is, I ripped them from his system and placed them into my own, because they fit my needs.</p>
+<p>Resources is excluded because it&rsquo;s already covered by References (see below).</p>
+<h2 id="notes-isnt-that-a-little-broad">&ldquo;Notes&rdquo;? Isn&rsquo;t that a little broad?</h2>
+<p>Yeah, it is. Originally, my system only had a Notes folder and a References folder. I didn&rsquo;t want to change it, so I left it.</p>
+<p>This folder is analogous to the &lsquo;main notes&rsquo; of the Zettelkasten method.</p>
+<h2 id="references">&ldquo;References&rdquo;?</h2>
+<p>The references folder is analogous to the &rsquo;literature notes&rsquo; from the Zettelkasten method.</p>
+<p>Each file inside of this folder is a Zotero bibkey. I annotate my sources in Zotero and import them here.</p>
+<h2 id="the-two-oddballs-meta-and-attachments">The two oddballs: Meta and Attachments</h2>
+<p>Meta is a place for anything that my vault needs to function. Examples include templates, copies of configuration that I really don&rsquo;t want to have to invent twice, and so on.</p>
+<p>Attachments is what it sounds like: Images. I only add an image to a note if I feel like it helps to explain a concept better.</p>
+<h2 id="this-system-isnt-all-encompassing">This system isn&rsquo;t all-encompassing</h2>
+<p>My system isn&rsquo;t an all-encompassing &rsquo;life OS&rsquo;. Most notably, you&rsquo;ll notice there&rsquo;s no task management system or daily notes/journal system incorporated.</p>
+<p>My <a href="https://en.wikipedia.org/wiki/Bullet_journal">Bullet Journal</a> is my task management system and my place for journalling. I enjoy the feel of paper, and my Bullet Journal is always accessible, even when PANoRAMA is not. My Bullet Journal also has a slight air of serenity to it, which my Obsidian vault does not. The BuJo is a little order-making machine, and PANoRAMA is a system for processing information, which are two different tasks in my mind.</p>
+<h2 id="please-take-inspiration-but-dont-use-this">Please take inspiration, but don&rsquo;t use this</h2>
+<p>This system has been battle-tested by myself for nearly a year. Emphasis on <strong>myself</strong>.
+I don&rsquo;t intend this system to be used <em>in situ</em> inside of your Obsidian vault.
+Instead, please <em>take inspiration</em> and build your system to fit your needs.
+If our systems end up being identical, great! If not, also great! <strong>As long as it works for you</strong>.</p>
+<h2 id="bibliography">Bibliography</h2>
+<ul>
+<li>Ahrens, Sönke. How to Take Smart Notes: One Simple Technique to Boost Writing, Learning and Thinking: For Students, Academics and Nonfiction Book Writers. 1st ed., CreateSpace, 2017.</li>
+<li>Forte, Tiago. Building a Second Brain: A Proven Method to Organize Your Digital Life and Unlock Your Creative Potential. 1st ed., Simon &amp; Schuster, 2022.</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Credits for the name go to prettyfaroutman in the Obsidian Discord server, otherwise this would have been <a href="https://en.wikipedia.org/wiki/Pran%C4%81ma">PRANAMA</a>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Borrowed from Forte&rsquo;s PARA system (cf. Forte, p. 79).&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref2:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>Borrowed from Ahrens&rsquo; methodology (cf. Ahrens).&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded></item><item><title>Setting up a development environment with Neovim and ComputerCraft</title><link>https://tomodachi94.github.io/blog/computercraft-neovim/</link><pubDate>Tue, 04 Jul 2023 21:57:13 -0700</pubDate><guid>https://tomodachi94.github.io/blog/computercraft-neovim/</guid><description>&lt;p&gt;&lt;a href="https://tweaked.cc"&gt;ComputerCraft&lt;/a&gt; is a Minecraft mod that adds programmable computers to the game. These computers are programmed with &lt;a href="https://lua.org"&gt;Lua&lt;/a&gt;, a scripting language written in C.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://neovim.io"&gt;Neovim&lt;/a&gt; is a fork of the &lt;a href="https://www.vim.org"&gt;Vim&lt;/a&gt; text editor; it adds configuration with Lua and language server support, among other things, to the classic Vim editor.&lt;/p&gt;
-&lt;p&gt;In this guide, I&amp;rsquo;ll be walking you through setting up a tolerable IDE-like environment for ComputerCraft in Neovim, similar to Visual Studio Code&amp;rsquo;s IntelliSense.&lt;/p&gt;</description></item><item><title>Nix quickstart guide</title><link>https://tomodachi94.github.io/blog/nix-quickstart/</link><pubDate>Mon, 17 Apr 2023 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/nix-quickstart/</guid><description>&lt;p&gt;This guide helps you start quickly with using Nix as a package manager. This guide covers setting up, &lt;code&gt;nix-shell&lt;/code&gt;, &lt;code&gt;nix-env -iA&lt;/code&gt;, and Home Manager.&lt;/p&gt;
+&lt;p&gt;In this guide, I&amp;rsquo;ll be walking you through setting up a tolerable IDE-like environment for ComputerCraft in Neovim, similar to Visual Studio Code&amp;rsquo;s IntelliSense.&lt;/p&gt;</description><content:encoded><![CDATA[<p><a href="https://tweaked.cc">ComputerCraft</a> is a Minecraft mod that adds programmable computers to the game. These computers are programmed with <a href="https://lua.org">Lua</a>, a scripting language written in C.</p>
+<p><a href="https://neovim.io">Neovim</a> is a fork of the <a href="https://www.vim.org">Vim</a> text editor; it adds configuration with Lua and language server support, among other things, to the classic Vim editor.</p>
+<p>In this guide, I&rsquo;ll be walking you through setting up a tolerable IDE-like environment for ComputerCraft in Neovim, similar to Visual Studio Code&rsquo;s IntelliSense.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Basic Vim and Neovim skills.</li>
+<li>Basic comprehension of Lua (needed for configuring Neovim).</li>
+<li><code>nvim</code> and <code>git</code> installed.</li>
+<li><code>nvim-cmp</code> setup and working. That is slightly out-of-scope for this guide; I recommend <a href="https://vonheikemen.github.io/devlog/tools/setup-nvim-lspconfig-plus-nvim-cmp/">Heiker Curiel&rsquo;s guide</a> for getting this working.</li>
+<li>The following Neovim plugins, installed with your plugin manager of choice:
+<ul>
+<li><a href="https://github.com/neovim/nvim-lspconfig"><code>nvim-lspconfig</code></a>, for automatically setting up the Neovim LSP consumer for common LSP servers.</li>
+<li><a href="https://github.com/williamboman/mason.nvim"><code>mason</code></a>, for installing and managing other bits of software, including LSP servers.</li>
+<li><a href="https://github.com/williamboman/mason-lspconfig.nvim"><code>mason-lspconfig</code></a>, for gluing together <code>mason</code> and <code>nvim-lspconfig</code>.</li>
+<li>&hellip;and whatever plugins you need for <code>nvim-cmp</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="setting-up-lua-language-server-and-the-cc-tweaked-addon">Setting up <code>lua-language-server</code> and the <code>cc-tweaked</code> addon</h2>
+<p>After you&rsquo;ve installed Mason, install the <code>lua-language-server</code> with Mason and ensures that <code>nvim-lspconfig</code> knows about it:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>:MasonInstall lua-language-server</span></span></code></pre></div><p>Then, clone the <code>lua-language-server</code> plugins with Git:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>$ git clone https://github.com/LuaLS/LLS-Addons ~/LLS-Addons --recurse-submodules --shallow-submodules --depth<span style="color:#666">=</span><span style="color:#40a070">1</span></span></span></code></pre></div><p>Afterwards, create a <code>.luarc.json</code> file in your project&rsquo;s root directory with the following contents:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>{
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>    <span style="color:#062873;font-weight:bold">&#34;workspace.library&#34;</span>: [<span style="color:#4070a0">&#34;/home/me/LLS-Addons/addons/cc-tweaked&#34;</span>]
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>}</span></span></code></pre></div><p>(Don&rsquo;t forget to replace <code>me</code> with your username!)</p>
+<p>Launch Neovim and try it out:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>$ nvim some-cool-cc-project.lua</span></span></code></pre></div><p>Voila! Your faux IntelliSense should now be working!</p>
+]]></content:encoded></item><item><title>Nix quickstart guide</title><link>https://tomodachi94.github.io/blog/nix-quickstart/</link><pubDate>Mon, 17 Apr 2023 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/nix-quickstart/</guid><description>&lt;p&gt;This guide helps you start quickly with using Nix as a package manager. This guide covers setting up, &lt;code&gt;nix-shell&lt;/code&gt;, &lt;code&gt;nix-env -iA&lt;/code&gt;, and Home Manager.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s a quick way to get started with using Nix as a &lt;em&gt;package manager&lt;/em&gt; without diving into the complex internals:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Install Nix with &lt;code&gt;sh &amp;lt;(curl -L https://nixos.org/nix/install) --daemon&lt;/code&gt;. Make sure to add that snippet at the end to your shell configuration or you&amp;rsquo;ll have some trouble later.&lt;/li&gt;
@@ -19,12 +266,127 @@ This is largely a mash-up of different systems, designed to fit &lt;em&gt;my&lt;
 &lt;li&gt;Run &lt;code&gt;nix-env -iA pkgs.cowsay&lt;/code&gt; to add &lt;code&gt;cowsay&lt;/code&gt; into your path permanently. I don&amp;rsquo;t recommend this method if you use more than a few packages; see later bullet points about Home Manager.&lt;/li&gt;
 &lt;li&gt;Side note, if you want to search all of the packages in Nixpkgs, you can use the wonderful interface at &lt;a href="https://search.nixos.org"&gt;https://search.nixos.org&lt;/a&gt;. Make sure to select to &lt;code&gt;unstable&lt;/code&gt; channel in the switcher below the search bar.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;This is pretty much all you need to use Nix, but there are much better ways to ensure packages are installed and automatically put on &lt;code&gt;$PATH&lt;/code&gt;. Out of the solutions, I still prefer &lt;a href="https://github.com/nix-community/home-manager"&gt;Home Manager&lt;/a&gt; (abbreviated to HM).&lt;/p&gt;</description></item><item><title>Editing Fandom wikis with Neovim</title><link>https://tomodachi94.github.io/blog/fandom-neovim/</link><pubDate>Sun, 16 Oct 2022 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/fandom-neovim/</guid><description>&lt;p&gt;&lt;em&gt;This guide assumes you know how to insert text, move the cursor, and execute commands in Neovim.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This is pretty much all you need to use Nix, but there are much better ways to ensure packages are installed and automatically put on &lt;code&gt;$PATH&lt;/code&gt;. Out of the solutions, I still prefer &lt;a href="https://github.com/nix-community/home-manager"&gt;Home Manager&lt;/a&gt; (abbreviated to HM).&lt;/p&gt;</description><content:encoded><![CDATA[<p>This guide helps you start quickly with using Nix as a package manager. This guide covers setting up, <code>nix-shell</code>, <code>nix-env -iA</code>, and Home Manager.</p>
+<p>Here&rsquo;s a quick way to get started with using Nix as a <em>package manager</em> without diving into the complex internals:</p>
+<ul>
+<li>Install Nix with <code>sh &lt;(curl -L https://nixos.org/nix/install) --daemon</code>. Make sure to add that snippet at the end to your shell configuration or you&rsquo;ll have some trouble later.</li>
+<li>Run <code>nix-channel --update</code>. This is pretty much the same as <code>apt-get update</code>.</li>
+<li>Run <code>nix-shell -p cowsay</code>. This downloads <code>cowsay</code> into your <em>Nix Store</em> (at <code>/nix/store</code>) and then modifies your <code>$PATH</code> and other variables to make it executable in your shell. Run <code>cowsay 'Hello Nix!'</code> to test it out; it should behave the same.</li>
+<li>Run <code>nix-env -iA pkgs.cowsay</code> to add <code>cowsay</code> into your path permanently. I don&rsquo;t recommend this method if you use more than a few packages; see later bullet points about Home Manager.</li>
+<li>Side note, if you want to search all of the packages in Nixpkgs, you can use the wonderful interface at <a href="https://search.nixos.org">https://search.nixos.org</a>. Make sure to select to <code>unstable</code> channel in the switcher below the search bar.</li>
+</ul>
+<p>This is pretty much all you need to use Nix, but there are much better ways to ensure packages are installed and automatically put on <code>$PATH</code>. Out of the solutions, I still prefer <a href="https://github.com/nix-community/home-manager">Home Manager</a> (abbreviated to HM).</p>
+<h2 id="home-manager">Home Manager</h2>
+<p>HM is a configuration management system that can also manipulate your <code>$PATH</code> and other things.</p>
+<p>Here&rsquo;s a quick way to start using HM:</p>
+<ul>
+<li>Install HM with <code>nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager</code>, then update your channels with <code>nix-channel --update</code>. If you see something being &lsquo;built&rsquo;, that is perfectly normal. You&rsquo;ll also need to run <code>nix-shell '&lt;home-manager&gt;' -A install</code> to complete the installation.</li>
+<li>Add <code>. $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh</code> to your <code>.bashrc</code>/<code>.zshrc</code> to ensure binaries are added to the <code>$PATH</code>. Relaunch your shell afterwards.</li>
+<li>You&rsquo;ll need to <code>mkdir ~/.config/home-manager</code>, then run <code>$EDITOR ~/.config/home-manager/home.nix</code>. Add this snippet to start:</li>
+</ul>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nix" data-lang="nix"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>{ environment<span style="color:#666">,</span> config<span style="color:#666">,</span> pkgs<span style="color:#666">,</span> lib<span style="color:#666">,</span> <span style="color:#666">...</span> }:
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>{
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>  <span style="color:#60a0b0;font-style:italic"># Home-Manager needs to know who you are, which is why I use `me` as my username</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>  home<span style="color:#666">.</span>username <span style="color:#666">=</span> <span style="color:#4070a0">&#34;me&#34;</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>  home<span style="color:#666">.</span>homeDirectory <span style="color:#666">=</span> <span style="color:#4070a0">&#34;/home/me&#34;</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>  <span style="color:#60a0b0;font-style:italic"># Remove this if you are on Darwin or some non-Linux platform</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>  targets<span style="color:#666">.</span>genericLinux<span style="color:#666">.</span>enable <span style="color:#666">=</span> <span style="color:#60add5">true</span>;
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>  <span style="color:#60a0b0;font-style:italic"># Here&#39;s the fun part!</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>  home<span style="color:#666">.</span>packages <span style="color:#666">=</span> [
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span>    pkgs<span style="color:#666">.</span>git <span style="color:#60a0b0;font-style:italic"># Version control</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>    pkgs<span style="color:#666">.</span>neovim <span style="color:#60a0b0;font-style:italic"># Text editor</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span>    pkgs<span style="color:#666">.</span>exa <span style="color:#60a0b0;font-style:italic"># Better ls</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>    pkgs<span style="color:#666">.</span>fd <span style="color:#60a0b0;font-style:italic"># Better find</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>    pkgs<span style="color:#666">.</span>ripgrep <span style="color:#60a0b0;font-style:italic"># Better grep</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span>    pkgs<span style="color:#666">.</span>fzf <span style="color:#60a0b0;font-style:italic"># Better fuzzy finder</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>    pkgs<span style="color:#666">.</span>bat <span style="color:#60a0b0;font-style:italic"># Better cat</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span>	pkgs<span style="color:#666">.</span>zathura <span style="color:#60a0b0;font-style:italic"># PDF reader</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span>    pkgs<span style="color:#666">.</span>starship <span style="color:#60a0b0;font-style:italic"># Shell prompt</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span>    pkgs<span style="color:#666">.</span>atuin <span style="color:#60a0b0;font-style:italic"># Better shell history</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span>  ];
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span><span>}</span></span></code></pre></div><ul>
+<li>This is all you need to start. I recommend removing some of the packages that I have filled and replace them with some of your own tools that you use on a daily basis.</li>
+<li>Update your HM configuration with <code>home-manager switch</code>. You&rsquo;ll notice some stuff being downloaded and eventually you will return to your shell.</li>
+<li>Try out your new packages!</li>
+<li>There is also a way to configure things with Home Manager; I will cover that in another guide since that is out of scope for this one.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<p>If Nix seems interesting and you want to learn the internals, I recommend the following resources:</p>
+<ul>
+<li><a href="https://zero-to-nix.com">Zero to Nix</a> is a great resource explaining a lot of Nix concepts. This is my go-to resource for most things Nix.</li>
+<li><a href="https://nixos.org/manual/nixpkgs/stable/">The Nixpkgs manual</a>. I cannot recommend this enough, especially once you want to create your own packages.</li>
+<li>The <a href="https://nix-community.github.io/home-manager/">Home Manager manual</a> for HM-related things.</li>
+<li>Again, the <a href="https://search.nixos.org">Nixpkgs package search</a> for finding packages.</li>
+</ul>
+]]></content:encoded></item><item><title>Editing Fandom wikis with Neovim</title><link>https://tomodachi94.github.io/blog/fandom-neovim/</link><pubDate>Sun, 16 Oct 2022 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/fandom-neovim/</guid><description>&lt;p&gt;&lt;em&gt;This guide assumes you know how to insert text, move the cursor, and execute commands in Neovim.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://neovim.io"&gt;Neovim&lt;/a&gt; is a text editor based on &lt;a href="https://www.vim.org"&gt;Vim&lt;/a&gt;.
 It is extremely extensible, and we&amp;rsquo;ll be taking advantage of that to edit on Fandom wikis.&lt;/p&gt;
 &lt;p&gt;Install Neovim (but Vim should also work for this guide). It might already be on your Linux computer.
-You will also need an installation of Python, and a library called &lt;code&gt;mwclient&lt;/code&gt; from &lt;code&gt;pip&lt;/code&gt;, as well as a plugin manager. I chose Vim-Plug.&lt;/p&gt;</description></item><item><title>How I Transcribe Handwritten Notes Into Obsidian</title><link>https://tomodachi94.github.io/blog/handwritten-notes/</link><pubDate>Mon, 17 Jan 2022 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/handwritten-notes/</guid><description>&lt;p&gt;&lt;a href="https://obsidian.md"&gt;Obsidian&lt;/a&gt; is a Markdown-based note taking tool focused on connections between notes. Today, I&amp;rsquo;ll show you how I transcribe my handwritten &lt;a href="https://en.wikipedia.org/wiki/Cornell_Notes"&gt;Cornell notes&lt;/a&gt; into a linkable web of thought.&lt;/p&gt;
+You will also need an installation of Python, and a library called &lt;code&gt;mwclient&lt;/code&gt; from &lt;code&gt;pip&lt;/code&gt;, as well as a plugin manager. I chose Vim-Plug.&lt;/p&gt;</description><content:encoded><![CDATA[<p><em>This guide assumes you know how to insert text, move the cursor, and execute commands in Neovim.</em></p>
+<p><a href="https://neovim.io">Neovim</a> is a text editor based on <a href="https://www.vim.org">Vim</a>.
+It is extremely extensible, and we&rsquo;ll be taking advantage of that to edit on Fandom wikis.</p>
+<p>Install Neovim (but Vim should also work for this guide). It might already be on your Linux computer.
+You will also need an installation of Python, and a library called <code>mwclient</code> from <code>pip</code>, as well as a plugin manager. I chose Vim-Plug.</p>
+<p>First, execute <code>pip install mwclient</code> in your terminal. If you are on Linux, use your package manager to install <code>nvim</code>. Otherwise, download the executable and install it.</p>
+<p>Take the file from <a href="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim">https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</a> and put it into <code>~/.local/share/nvim/site/autoload/plug.vim</code>.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>Then, open up your Neovim config at <code>.config/nvim/init.vim</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> and add this text at the top, replacing &lt;yourfandomwiki&gt; with the wiki&rsquo;s URL and &lt;YourFandomUsername&gt; with your username:<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>call plug#begin()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>Plug <span style="color:#4070a0">&#39;https://github.com/aquach/vim-mediawiki-editor&#39;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>Plug <span style="color:#4070a0">&#39;https://github.com/chikamichi/mediawiki.vim&#39;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>call plug#end()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span><span style="color:#007020;font-weight:bold">let</span> g:mediawiki_editor_url = <span style="color:#4070a0">&#34;&lt;yourfandomwiki&gt;.fandom.com&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span><span style="color:#007020;font-weight:bold">let</span> g:mediawiki_editor_path = <span style="color:#4070a0">&#34;/&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span><span><span style="color:#007020;font-weight:bold">let</span> g:mediawiki_editor_username = <span style="color:#4070a0">&#34;&lt;YourFandomUsername&gt;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9</span><span><span style="color:#007020;font-weight:bold">let</span> g:mediawiki_editor_uri_scheme = <span style="color:#4070a0">&#34;https&#34;</span></span></span></code></pre></div><p>Next, save that, then close and reopen Neovim.
+Execute the <code>:PlugInstall</code> command in Neovim, and hit enter.</p>
+<p>Then, restart Neovim and execute <code>:MWRead Main Page</code> in the editor.
+You will be prompted for a password.</p>
+<p>After you have been authenticated, you can now edit on your wiki of choice!<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>
+To save your page back to the wiki, execute <code>:MWWrite</code>.
+Now, check out your edit with <code>:MWBrowse</code>!</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>On Windows, that will be <code>~\AppData\Local\nvim\autoload</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>On Windows, that will be <code>~\AppData\Local\nvim\init.vim</code>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>If you already have plugin management and you know what you&rsquo;re doing, you can add the plugins <code>https://github.com/aquach/vim-mediawiki-editor</code> for editing functionality and <code>https://github.com/chikamichi/mediawiki.vim</code> for syntax highlighting.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>You will need to reauthenticate when you close Neovim. You can add <code>let g:mediawiki_editor_password = &quot;YourPassword&quot;</code> to your config, but I can&rsquo;t recommend this.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded></item><item><title>How I Transcribe Handwritten Notes Into Obsidian</title><link>https://tomodachi94.github.io/blog/handwritten-notes/</link><pubDate>Mon, 17 Jan 2022 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/handwritten-notes/</guid><description>&lt;p&gt;&lt;a href="https://obsidian.md"&gt;Obsidian&lt;/a&gt; is a Markdown-based note taking tool focused on connections between notes. Today, I&amp;rsquo;ll show you how I transcribe my handwritten &lt;a href="https://en.wikipedia.org/wiki/Cornell_Notes"&gt;Cornell notes&lt;/a&gt; into a linkable web of thought.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Related: &lt;a href="https://www.psychologytoday.com/us/blog/creative-leadership/201902/why-you-should-take-notes-hand"&gt;Why You Should Take Notes By Hand&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src="./cnotes_example.png" alt="The layout of notes taken using the Cornell Method."&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Image courtesy of Icez~enwikibooks at English Wikibooks, Public domain, via Wikimedia Commons&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;I first begin by creating a scratch note, similar to a &lt;a href="https://publish.obsidian.md/hub/05+-+Concepts/Maps+of+Content+(MOC)"&gt;map of content&lt;/a&gt; (MOC). It&amp;rsquo;s temporary, but it can be evolved into a MOC if you want, or just deleted when done.&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;I first begin by creating a scratch note, similar to a &lt;a href="https://publish.obsidian.md/hub/05+-+Concepts/Maps+of+Content+(MOC)"&gt;map of content&lt;/a&gt; (MOC). It&amp;rsquo;s temporary, but it can be evolved into a MOC if you want, or just deleted when done.&lt;/p&gt;</description><content:encoded><![CDATA[<p><a href="https://obsidian.md">Obsidian</a> is a Markdown-based note taking tool focused on connections between notes. Today, I&rsquo;ll show you how I transcribe my handwritten <a href="https://en.wikipedia.org/wiki/Cornell_Notes">Cornell notes</a> into a linkable web of thought.</p>
+<p><em>Related: <a href="https://www.psychologytoday.com/us/blog/creative-leadership/201902/why-you-should-take-notes-hand">Why You Should Take Notes By Hand</a></em></p>
+<p><img src="./cnotes_example.png" alt="The layout of notes taken using the Cornell Method."></p>
+<p><em>Image courtesy of Icez~enwikibooks at English Wikibooks, Public domain, via Wikimedia Commons</em></p>
+<p>I first begin by creating a scratch note, similar to a <a href="https://publish.obsidian.md/hub/05+-+Concepts/Maps+of+Content+(MOC)">map of content</a> (MOC). It&rsquo;s temporary, but it can be evolved into a MOC if you want, or just deleted when done.</p>
+<p>I read down the recall column (the left column on the side of the Cornell notes), determining if each item is worthy of its own note, if it will be in another note, or left out entirely (which probably defeats the point of having it written in your original handwritten notes in the first place, but I won&rsquo;t judge).</p>
+<p>If it does end up being worthy of its own note, add a link to a bulleted list in said scratch note to come back to later.</p>
+<p>After you&rsquo;ve finished with that, click on the links and start transcribing your notes. Make sure to add links when you come across things you have notes on or might take notes on in the future.</p>
+<p>Repeat this until you&rsquo;re done. After that, enjoy your new digitized notes!</p>
+<p><em>Originally posted by me on <a href="https://tomodachi.writeas.com">my old Write.as blog</a>.</em></p>
+]]></content:encoded></item></channel></rss>

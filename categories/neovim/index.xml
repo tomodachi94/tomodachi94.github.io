@@ -1,5 +1,50 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Neovim on Tomodachi94's Musings</title><link>https://tomodachi94.github.io/categories/neovim/</link><description>Recent content in Neovim on Tomodachi94's Musings</description><generator>Hugo</generator><language>en-us</language><copyright>Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated.</copyright><lastBuildDate>Sun, 16 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://tomodachi94.github.io/categories/neovim/index.xml" rel="self" type="application/rss+xml"/><item><title>Editing Fandom wikis with Neovim</title><link>https://tomodachi94.github.io/blog/fandom-neovim/</link><pubDate>Sun, 16 Oct 2022 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/fandom-neovim/</guid><description>&lt;p&gt;&lt;em&gt;This guide assumes you know how to insert text, move the cursor, and execute commands in Neovim.&lt;/em&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Neovim on Tomodachi94's Musings</title><link>https://tomodachi94.github.io/categories/neovim/</link><description>Recent content in Neovim on Tomodachi94's Musings</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated.</copyright><lastBuildDate>Sun, 16 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://tomodachi94.github.io/categories/neovim/index.xml" rel="self" type="application/rss+xml"/><item><title>Editing Fandom wikis with Neovim</title><link>https://tomodachi94.github.io/blog/fandom-neovim/</link><pubDate>Sun, 16 Oct 2022 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/fandom-neovim/</guid><description>&lt;p&gt;&lt;em&gt;This guide assumes you know how to insert text, move the cursor, and execute commands in Neovim.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://neovim.io"&gt;Neovim&lt;/a&gt; is a text editor based on &lt;a href="https://www.vim.org"&gt;Vim&lt;/a&gt;.
 It is extremely extensible, and we&amp;rsquo;ll be taking advantage of that to edit on Fandom wikis.&lt;/p&gt;
 &lt;p&gt;Install Neovim (but Vim should also work for this guide). It might already be on your Linux computer.
-You will also need an installation of Python, and a library called &lt;code&gt;mwclient&lt;/code&gt; from &lt;code&gt;pip&lt;/code&gt;, as well as a plugin manager. I chose Vim-Plug.&lt;/p&gt;</description></item></channel></rss>
+You will also need an installation of Python, and a library called &lt;code&gt;mwclient&lt;/code&gt; from &lt;code&gt;pip&lt;/code&gt;, as well as a plugin manager. I chose Vim-Plug.&lt;/p&gt;</description><content:encoded><![CDATA[<p><em>This guide assumes you know how to insert text, move the cursor, and execute commands in Neovim.</em></p>
+<p><a href="https://neovim.io">Neovim</a> is a text editor based on <a href="https://www.vim.org">Vim</a>.
+It is extremely extensible, and we&rsquo;ll be taking advantage of that to edit on Fandom wikis.</p>
+<p>Install Neovim (but Vim should also work for this guide). It might already be on your Linux computer.
+You will also need an installation of Python, and a library called <code>mwclient</code> from <code>pip</code>, as well as a plugin manager. I chose Vim-Plug.</p>
+<p>First, execute <code>pip install mwclient</code> in your terminal. If you are on Linux, use your package manager to install <code>nvim</code>. Otherwise, download the executable and install it.</p>
+<p>Take the file from <a href="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim">https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim</a> and put it into <code>~/.local/share/nvim/site/autoload/plug.vim</code>.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>Then, open up your Neovim config at <code>.config/nvim/init.vim</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> and add this text at the top, replacing &lt;yourfandomwiki&gt; with the wiki&rsquo;s URL and &lt;YourFandomUsername&gt; with your username:<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>call plug#begin()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span>Plug <span style="color:#4070a0">&#39;https://github.com/aquach/vim-mediawiki-editor&#39;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>Plug <span style="color:#4070a0">&#39;https://github.com/chikamichi/mediawiki.vim&#39;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>call plug#end()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span><span style="color:#007020;font-weight:bold">let</span> g:mediawiki_editor_url = <span style="color:#4070a0">&#34;&lt;yourfandomwiki&gt;.fandom.com&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span><span style="color:#007020;font-weight:bold">let</span> g:mediawiki_editor_path = <span style="color:#4070a0">&#34;/&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span><span><span style="color:#007020;font-weight:bold">let</span> g:mediawiki_editor_username = <span style="color:#4070a0">&#34;&lt;YourFandomUsername&gt;&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9</span><span><span style="color:#007020;font-weight:bold">let</span> g:mediawiki_editor_uri_scheme = <span style="color:#4070a0">&#34;https&#34;</span></span></span></code></pre></div><p>Next, save that, then close and reopen Neovim.
+Execute the <code>:PlugInstall</code> command in Neovim, and hit enter.</p>
+<p>Then, restart Neovim and execute <code>:MWRead Main Page</code> in the editor.
+You will be prompted for a password.</p>
+<p>After you have been authenticated, you can now edit on your wiki of choice!<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>
+To save your page back to the wiki, execute <code>:MWWrite</code>.
+Now, check out your edit with <code>:MWBrowse</code>!</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>On Windows, that will be <code>~\AppData\Local\nvim\autoload</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>On Windows, that will be <code>~\AppData\Local\nvim\init.vim</code>.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>If you already have plugin management and you know what you&rsquo;re doing, you can add the plugins <code>https://github.com/aquach/vim-mediawiki-editor</code> for editing functionality and <code>https://github.com/chikamichi/mediawiki.vim</code> for syntax highlighting.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>You will need to reauthenticate when you close Neovim. You can add <code>let g:mediawiki_editor_password = &quot;YourPassword&quot;</code> to your config, but I can&rsquo;t recommend this.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded></item></channel></rss>

@@ -1,6 +1,109 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Unit Testing on Tomodachi94's Musings</title><link>https://tomodachi94.github.io/tags/unit-testing/</link><description>Recent content in Unit Testing on Tomodachi94's Musings</description><generator>Hugo</generator><language>en-us</language><copyright>Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated.</copyright><lastBuildDate>Sun, 09 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tomodachi94.github.io/tags/unit-testing/index.xml" rel="self" type="application/rss+xml"/><item><title>Unit testing with ComputerCraft, McFly, and CraftOS-PC</title><link>https://tomodachi94.github.io/blog/computercraft-mcfly-testing/</link><pubDate>Sun, 09 Feb 2025 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/computercraft-mcfly-testing/</guid><description>&lt;p&gt;&lt;a href="https://www.howtogeek.com/devops/what-is-unit-testing-and-why-is-it-important/"&gt;Unit testing is awesome&lt;/a&gt;.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>Unit Testing on Tomodachi94's Musings</title><link>https://tomodachi94.github.io/tags/unit-testing/</link><description>Recent content in Unit Testing on Tomodachi94's Musings</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated.</copyright><lastBuildDate>Sun, 09 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tomodachi94.github.io/tags/unit-testing/index.xml" rel="self" type="application/rss+xml"/><item><title>Unit testing with ComputerCraft, McFly, and CraftOS-PC</title><link>https://tomodachi94.github.io/blog/computercraft-mcfly-testing/</link><pubDate>Sun, 09 Feb 2025 00:00:00 +0000</pubDate><guid>https://tomodachi94.github.io/blog/computercraft-mcfly-testing/</guid><description>&lt;p&gt;&lt;a href="https://www.howtogeek.com/devops/what-is-unit-testing-and-why-is-it-important/"&gt;Unit testing is awesome&lt;/a&gt;.
 It helps you catch bugs early by ensuring all of the components of your program work as expected.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Note: This guide is targeted towards &lt;em&gt;experts&lt;/em&gt; who have advanced knowledge of ComputerCraft and know a few things about unit tests.&lt;/strong&gt;
 Experience with unit tests in another language is helpful too, but isn&amp;rsquo;t required.&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://computercraft.cc"&gt;CC: Tweaked&lt;/a&gt; contains a little-known unit testing framework called &lt;strong&gt;McFly&lt;/strong&gt;, which describes itself as &amp;ldquo;a very basic test framework for ComputerCraft&amp;rdquo; drawing inspiration from the &lt;a href="https://lunarmodules.github.io/busted/"&gt;Busted&lt;/a&gt; framework for Lua.
-This post will function as an introduction to McFly, in the process providing instructions for running the tests inside of the &lt;a href="https://craftos-pc.cc"&gt;CraftOS-PC emulator&lt;/a&gt;, suitable for running in a continuous integration pipeline.&lt;/p&gt;</description></item></channel></rss>
+This post will function as an introduction to McFly, in the process providing instructions for running the tests inside of the &lt;a href="https://craftos-pc.cc"&gt;CraftOS-PC emulator&lt;/a&gt;, suitable for running in a continuous integration pipeline.&lt;/p&gt;</description><content:encoded><![CDATA[<p><a href="https://www.howtogeek.com/devops/what-is-unit-testing-and-why-is-it-important/">Unit testing is awesome</a>.
+It helps you catch bugs early by ensuring all of the components of your program work as expected.</p>
+<p><strong>Note: This guide is targeted towards <em>experts</em> who have advanced knowledge of ComputerCraft and know a few things about unit tests.</strong>
+Experience with unit tests in another language is helpful too, but isn&rsquo;t required.</p>
+<p><a href="https://computercraft.cc">CC: Tweaked</a> contains a little-known unit testing framework called <strong>McFly</strong>, which describes itself as &ldquo;a very basic test framework for ComputerCraft&rdquo; drawing inspiration from the <a href="https://lunarmodules.github.io/busted/">Busted</a> framework for Lua.
+This post will function as an introduction to McFly, in the process providing instructions for running the tests inside of the <a href="https://craftos-pc.cc">CraftOS-PC emulator</a>, suitable for running in a continuous integration pipeline.</p>
+<p>This post assumes you have a functional library or program that you want to test, located in a locally-cloned Git repository.
+It also assumes that you know how to write and execute shell scripts in Bash.</p>
+<p>This guide assumes you have a library, located at <code>my_library.lua</code>.</p>
+<h2 id="getting-mcfly">Getting McFly</h2>
+<p>McFly is available <a href="https://raw.githubusercontent.com/cc-tweaked/CC-Tweaked/refs/heads/mc-1.20.x/projects/core/src/test/resources/test-rom/mcfly.lua">through the CC: Tweaked GitHub repository</a>.
+Download it to a memorable location inside of your repository; we chose <code>test/mcfly.lua</code>.</p>
+<p><strong>Update 09 November 2025: If you use <a href="https://unicornpkg.madefor.cc">unicornpkg</a>, you can alternatively install it by running <code>hoof install mcfly</code>, which places it into <code>bin/mcfly.lua</code> on your computer.</strong></p>
+<h2 id="getting-craftos-pc">Getting CraftOS-PC</h2>
+<p>This guide assumes that you want to use CraftOS-PC to run the tests outside of the game.</p>
+<p>To install CraftOS-PC, follow the <a href="https://www.craftos-pc.cc/docs/installation">guide on its documentation</a>.
+(I&rsquo;m partial to Nix as a maintainer of its package, but I won&rsquo;t judge if you pick another method.)</p>
+<h2 id="make-a-simple-test">Make a simple test</h2>
+<p>Create a simple McFly test at <code>test/addition_spec.lua</code> (the <code>_spec</code> part is important). This will help us know if our setup works. Feel free to delete this file later once you have some tests.</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span><span style="color:#60a0b0;font-style:italic">-- &#34;addition&#34; is the name of the component you&#39;re testing,</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span><span style="color:#60a0b0;font-style:italic">-- usually a function.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span>describe(<span style="color:#4070a0">&#34;addition&#34;</span>, <span style="color:#007020;font-weight:bold">function</span>()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span>   it(<span style="color:#4070a0">&#34;adds two numbers correctly&#34;</span>, <span style="color:#007020;font-weight:bold">function</span>()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span>     expect(<span style="color:#40a070">2</span> <span style="color:#666">+</span> <span style="color:#40a070">2</span>):equals(<span style="color:#40a070">4</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span>   <span style="color:#007020;font-weight:bold">end</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span><span style="color:#007020;font-weight:bold">end</span>)</span></span></code></pre></div><h2 id="setting-up-the-testing-environment">Setting up the testing environment</h2>
+<p>CraftOS-PC has <a href="https://www.craftos-pc.cc/docs/cli">many CLI options</a>. The ones that interest us are <code>--directory</code>, <code>--headless</code>, and <code>--exec</code>.
+The first allows us to override CraftOS-PC&rsquo;s data directory, the second allows us to run CraftOS-PC without opening a GUI, and the third allows us to run arbitrary Lua code.</p>
+<p>Create a new shell script with the following contents. We named it <code>test/test.sh</code>, but feel free to name it something else or integrate it into a preexisting command running solution.</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span><span style="color:#007020">#!/usr/bin/env bash
+</span></span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span><span style="color:#007020"></span><span style="color:#007020">set</span> -euo pipefail
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span><span style="color:#60a0b0;font-style:italic"># This script is CC0; feel free to remove this notice and modify the script however you like, with or without attribution.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span><span style="color:#60a0b0;font-style:italic"># Get the root of your Git repository, for copying files into the environment later.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span><span style="color:#bb60d5">SOURCE_DIR</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;</span><span style="color:#007020;font-weight:bold">$(</span>git rev-parse --show-toplevel<span style="color:#007020;font-weight:bold">)</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span><span style="color:#60a0b0;font-style:italic"># Create a temporary directory for storing CraftOS-PC data.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span><span style="color:#bb60d5">DATA_DIR</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;</span><span style="color:#007020;font-weight:bold">$(</span>mktemp -d<span style="color:#007020;font-weight:bold">)</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>mkdir -p <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$DATA_DIR</span><span style="color:#4070a0">/computer/0&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span><span style="color:#bb60d5">COMPUTER_DIR</span><span style="color:#666">=</span><span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$DATA_DIR</span><span style="color:#4070a0">/computer/0&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span><span style="color:#60a0b0;font-style:italic"># Copy your library into the testing environment.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span>cp <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$SOURCE_DIR</span><span style="color:#4070a0">/my_library.lua&#34;</span> <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$COMPUTER_DIR</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span><span style="color:#60a0b0;font-style:italic"># And your tests!</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span>cp -r <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$SOURCE_DIR</span><span style="color:#4070a0">/test&#34;</span> <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$COMPUTER_DIR</span><span style="color:#4070a0">&#34;</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span><span style="color:#60a0b0;font-style:italic"># Run CraftOS-PC in headless mode (no GUI) and with the data directory set to $DATA_DIR.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span>craftos --directory <span style="color:#4070a0">&#34;</span><span style="color:#bb60d5">$DATA_DIR</span><span style="color:#4070a0">&#34;</span> --exec <span style="color:#4070a0">&#39;shell.run(&#34;test/mcfly.lua test&#34;); os.shutdown()&#39;</span></span></span></code></pre></div><p>Make sure to mark it executable with <code>chmod +x ./test/test.sh</code>.</p>
+<p>You should see something like this in your terminal when running <code>test/test.sh</code>:</p>
+
+
+
+
+
+<pre tabindex="0"><code>$ test/test.sh
+Ran 1 test(s), of which 1 passed (100%).</code></pre><p>Progress! We now have McFly running our tests whenever we run our script.</p>
+<h2 id="writing-our-tests">Writing our tests</h2>
+<p>All that&rsquo;s left to do is write our tests.</p>
+<p>I recommend incrementally writing tests for your code; if you try to write all of your tests all at once, <strong>you will burn out</strong> unless your library is very small.</p>
+<p>Tests come in this general format:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span>describe(<span style="color:#4070a0">&#34;identify_sound&#34;</span>, <span style="color:#007020;font-weight:bold">function</span>()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span>   it(<span style="color:#4070a0">&#34;can identify meow&#34;</span>, <span style="color:#007020;font-weight:bold">function</span>()
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span>     <span style="color:#60a0b0;font-style:italic">-- Load your library.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span>     <span style="color:#007020;font-weight:bold">local</span> my_library <span style="color:#666">=</span> require(<span style="color:#4070a0">&#34;my_library&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span>     expect(
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span>       <span style="color:#60a0b0;font-style:italic">-- Call your function with its parameters.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span>       my_library.identify_sound(<span style="color:#4070a0">&#34;meow&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span>     <span style="color:#60a0b0;font-style:italic">-- This is what you expect the result to be.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span>     <span style="color:#60a0b0;font-style:italic">-- McFly has many of these functions; see the documentation in its source code for more.</span>
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span>     ):equals(<span style="color:#4070a0">&#34;cat&#34;</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span>   <span style="color:#007020;font-weight:bold">end</span>)
+</span></span><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span><span style="color:#007020;font-weight:bold">end</span>)</span></span></code></pre></div><p>McFly expects tests to be named in the format <code>*_spec.lua</code>.</p>
+<p>If you get an error about <code>require</code>, see the next section.</p>
+<h2 id="a-tangent-packagepath-and-require-failing-to-find-your-library">A tangent: <code>package.path</code> and <code>require</code> failing to find your library</h2>
+<p>Don&rsquo;t fret! If your tests fail to find your library, add this one-liner to the top of your test:</p>
+
+
+
+
+
+<div class="highlight"><pre tabindex="0" style="background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span>package.path <span style="color:#666">=</span> <span style="color:#4070a0">&#34;/?.lua;/?/init.lua;&#34;</span> <span style="color:#666">..</span> package.path</span></span></code></pre></div><p>This one-liner prepends the root (<code>/</code>) directory to <a href="https://www.lua.org/manual/5.1/manual.html#pdf-require"><code>package.path</code>, which serves as the search path for <code>require</code></a>.</p>
+<h2 id="running-tests-in-github-actions">Running tests in GitHub Actions</h2>
+<p>This became a little bit tricky, because GitHub Actions&rsquo; Ubuntu runner does not contain a <code>libncurses5</code> library.</p>
+<p>I opted to <a href="https://github.com/unicornpkg/libunicornpkg/blob/cbc4beb8d2542beb016a145e44befa0360320797/.github/workflows/ci.yaml">use Nix when I was setting up testing for libunicornpkg</a>, but not everybody knows Nix so this isn&rsquo;t feasible for most people.</p>
+<p>If you manage to get something non-Nix working on GitHub Actions, please let me know!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Thanks for sticking with me through this abnormally large post!</p>
+<p>If something doesn&rsquo;t work, I got something wrong, or I left something important out, please reach out.</p>
+]]></content:encoded></item></channel></rss>
