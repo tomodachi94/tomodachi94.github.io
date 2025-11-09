@@ -16,7 +16,7 @@ jobs:
           submodules: true
 
       - name: Install Nix
-        uses: cachix/install-nix-action@v15
+        uses: cachix/install-nix-action@v31
         with:
           nix_version: 'latest'
 
