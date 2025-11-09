@@ -36,6 +36,8 @@ This guide assumes you have a library, located at `my_library.lua`.
 McFly is available [through the CC: Tweaked GitHub repository](https://raw.githubusercontent.com/cc-tweaked/CC-Tweaked/refs/heads/mc-1.20.x/projects/core/src/test/resources/test-rom/mcfly.lua).
 Download it to a memorable location inside of your repository; we chose `test/mcfly.lua`.
 
+**Update 09 November 2025: If you use [unicornpkg](https://unicornpkg.madefor.cc), you can alternatively install it by running `hoof install mcfly`, which places it into `bin/mcfly.lua` on your computer.**
+
 ## Getting CraftOS-PC
 
 This guide assumes that you want to use CraftOS-PC to run the tests outside of the game.
