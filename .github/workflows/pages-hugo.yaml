@@ -28,7 +28,7 @@ jobs:
           source ~/.bashrc
 
           # Build the Hugo website
-          nix build
+          nix build ".?submodules=1"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3

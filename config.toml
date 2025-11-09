@@ -3,7 +3,7 @@ languageCode = "en-us"
 title = "Tomodachi94's Musings"
 copyright = "Copyright © 2023, Tomodachi94. All Rights Reserved unless explicitly stated."
 
-theme = "hugo-bearblog"
+theme = "hugo-bearcub"
 
 staticDir = ["static"]
 

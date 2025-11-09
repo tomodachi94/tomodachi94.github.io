@@ -16,22 +16,6 @@
         "type": "github"
       }
     },
-    "hugo-bearblog": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1755786936,
-        "narHash": "sha256-ca81h6HW2LWRDo4yL23fFJ9BrkyZWVMT+toNDN/A8sg=",
-        "owner": "janraasch",
-        "repo": "hugo-bearblog",
-        "rev": "e43c252b8dded99643a6217c516762c0049fe37d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "janraasch",
-        "repo": "hugo-bearblog",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1761880412,
@@ -51,7 +35,6 @@
     "root": {
       "inputs": {
         "ai-robots-txt": "ai-robots-txt",
-        "hugo-bearblog": "hugo-bearblog",
         "nixpkgs": "nixpkgs"
       }
     }
