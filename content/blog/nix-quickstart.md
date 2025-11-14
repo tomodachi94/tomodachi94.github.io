@@ -34,7 +34,13 @@ Here's a quick way to start using HM:
 * Add `. $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh` to your `.bashrc`/`.zshrc` to ensure binaries are added to the `$PATH`. Relaunch your shell afterwards.
 * You'll need to `mkdir ~/.config/home-manager`, then run `$EDITOR ~/.config/home-manager/home.nix`. Add this snippet to start:
 ```nix
-{ environment, config, pkgs, lib, ... }:
+{
+  environment,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Home-Manager needs to know who you are, which is why I use `me` as my username
@@ -53,7 +59,7 @@ Here's a quick way to start using HM:
     pkgs.ripgrep # Better grep
     pkgs.fzf # Better fuzzy finder
     pkgs.bat # Better cat
-	pkgs.zathura # PDF reader
+    pkgs.zathura # PDF reader
     pkgs.starship # Shell prompt
     pkgs.atuin # Better shell history
   ];
