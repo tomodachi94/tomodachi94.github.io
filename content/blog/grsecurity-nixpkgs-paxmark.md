@@ -15,7 +15,7 @@ categories:
 This post aims to provide a bunch of historical background around [PaX](https://pax.grsecurity.net/) and [grsecurity](https://grsecurity.net) support in Nixpkgs.
 It is fairly abstract and can probably be digested by non-Nix people with ease.
 
-This post is mostly focused on the implementation in Nixpkgs; I am not an expect in PaX/grsecurity (so if I've gotten something wrong, please correct me).
+This post is mostly focused on the implementation in Nixpkgs; I am not an expert in PaX/grsecurity (so if I've gotten something wrong, please correct me).
 
 I'm also partially writing this so that people know what paxmark was, in case they encounter a reference to it.
 
