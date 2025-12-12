@@ -15,4 +15,4 @@ new-post slug:
 	hugo new content --kind blogpost content blog/{{slug}}.md
 
 check-links: build-pure
-	lychee ./result
+	lychee --base-dir ./result
