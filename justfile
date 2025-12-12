@@ -14,5 +14,5 @@ serve:
 new-post slug:
 	hugo new content --kind blogpost content blog/{{slug}}.md
 
-check-links:
-	lychee ./content
+check-links: build-pure
+	lychee ./result
