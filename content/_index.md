@@ -2,7 +2,7 @@ Hey there! I'm Tomodachi94, a programmer, gamer, wiki editor, and amateur archiv
 
 ## What do you do?
 
-I am pretty active in open source; I am a Nixpkgs commiter, and I maintain [several packages there](https://repology.org/maintainer/tomodachi94+nixpkgs@protonmail.com). I also created [Unicornpkg, a package manager](https://unicornpkg.madefor.cc) for ComputerCraft. I started [awesome-computercraft](https://github.com/tomodachi94/awesome-computercraft) of that same niche.
+I am pretty active in open source; I am a Nixpkgs commiter, and I maintain [several packages there](https://repology.org/maintainer/tomodachi94@protonmail.com). I also created [Unicornpkg, a package manager](https://unicornpkg.madefor.cc) for ComputerCraft. I started [awesome-computercraft](https://github.com/tomodachi94/awesome-computercraft) of that same niche.
 
 I am also active on [Wikimedia projects](https://meta.wikimedia.org/wiki/User:Tomodachi94), most notably [Wikidata](https://wikidata.org/). I am also somewhat active on the [FTB Wiki](https://ftb.fandom.com), the premier source of information on modded Minecraft.
 
