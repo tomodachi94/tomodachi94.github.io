@@ -1,2 +1,8 @@
-<!-- Based on: https://github.com/janraasch/hugo-bearblog/blob/efc24bc5e95f0ccb88051e1a7d95e8a1404e953e/layouts/partials/footer.html -->
-{{ if ne .Site.Params.hideMadeWithLine true }}Made with <a href="https://github.com/janraasch/hugo-bearblog/">Hugo ʕ•ᴥ•ʔ Bear</a> &bull; &#169; 2025 Tomodachi94 &#45; All Rights Reserved &bull; <a href="https://github.com/tomodachi94/tomodachi94.github.io">Source</a>{{ end }}
+<!-- Partially based on: https://github.com/clente/hugo-bearcub/blob/1d12a76549445b767fa02902caf30cec7ceaecf9/layouts/partials/footer.html -->
+<small>
+<ul class="separated-list">
+    <li>{{ .Site.Copyright }}</li>
+    <li>{{ markdownify .Site.Params.madeWith }}</li>
+    <li><a href="https://github.com/tomodachi94/tomodachi94.github.io">Source</a></li>
+</ul>
+</small>

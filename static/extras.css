@@ -1,0 +1,14 @@
+.separated-list {
+  display: inline-flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.85em;
+  color: #666;
+}
+
+.separated-list li:not(:last-child)::after {
+  content: "·";
+  margin: 0 8px;
+  color: #ccc;
+}
