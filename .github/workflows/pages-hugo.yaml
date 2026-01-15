@@ -60,6 +60,7 @@ jobs:
     needs: build
     steps:
       - uses: actions/download-artifact@v5
+        id: artifact
         with:
           artifact-ids: ${{ needs.build.outputs.artifact_id }}
       - name: Restore lychee cache
@@ -73,4 +74,5 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
-          args: "--root-dir . --cache --max-cache-age 1d ."
+          workingDirectory: ${{ steps.artifact.outputs.download-path }}
+          args: "--root-dir ${{ steps.artifact.outputs.download-path }} --cache --max-cache-age 1d ."
