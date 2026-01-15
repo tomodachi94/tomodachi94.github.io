@@ -22,7 +22,7 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v31
         with:
-          nix_version: 'latest'
+          install_options: "--no-channel-add"
 
       - name: Build with Nix
         run: |
