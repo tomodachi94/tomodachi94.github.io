@@ -68,6 +68,8 @@ jobs:
           path: .lycheecache
           key: cache-lychee-${{ github.sha }}
           restore-keys: cache-lychee-
+      - name: Debug
+        run: find .
 
       - name: Link Checker
         id: lychee
