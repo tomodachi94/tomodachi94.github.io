@@ -33,7 +33,7 @@ jobs:
           # Build the Hugo website
           nix build ".?submodules=1"
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         id: artifact
         with:
           path: ./result
