@@ -40,7 +40,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'tomodachi94/tomodachi94.github.io' }}
+    if: ${{ github.repository == 'tomodachi94/tomodachi94.github.io' && github.ref == 'refs/heads/main' }}
     permissions:
       contents: read
       pages: write
