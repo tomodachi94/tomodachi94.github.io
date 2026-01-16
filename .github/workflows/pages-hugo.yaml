@@ -72,12 +72,11 @@ jobs:
           key: cache-lychee-${{ github.sha }}
           restore-keys: cache-lychee-
 
-      - run: echo "temp_dir=$(mktemp -d)" > "$GITHUB_OUTPUT"
-        id: temp_dir
+      - run: chmod -R 777 .
+        name: Fixup
 
       - name: Link Checker
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
           args: '--root-dir "$(pwd)" --cache --max-cache-age 1d .'
-          output: "${{ steps.temp_dir.outputs.temp_dir }}/results.md"
