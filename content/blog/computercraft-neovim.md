@@ -23,8 +23,8 @@ In this guide, I'll be walking you through setting up a tolerable IDE-like envir
 * `nvim-cmp` setup and working. That is slightly out-of-scope for this guide; I recommend [Heiker Curiel's guide](https://vonheikemen.github.io/devlog/tools/setup-nvim-lspconfig-plus-nvim-cmp/) for getting this working.
 * The following Neovim plugins, installed with your plugin manager of choice:
     + [`nvim-lspconfig`](https://github.com/neovim/nvim-lspconfig), for automatically setting up the Neovim LSP consumer for common LSP servers.
-    + [`mason`](https://github.com/williamboman/mason.nvim), for installing and managing other bits of software, including LSP servers.
-    + [`mason-lspconfig`](https://github.com/williamboman/mason-lspconfig.nvim), for gluing together `mason` and `nvim-lspconfig`.
+    + [`mason`](https://github.com/mason-org/mason.nvim), for installing and managing other bits of software, including LSP servers.
+    + [`mason-lspconfig`](https://github.com/mason-org/mason-lspconfig.nvim), for gluing together `mason` and `nvim-lspconfig`.
     + ...and whatever plugins you need for `nvim-cmp`.
 
 ## Setting up `lua-language-server` and the `cc-tweaked` addon
