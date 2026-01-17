@@ -23,15 +23,7 @@ jobs:
           install_options: "--no-channel-add"
 
       - name: Build with Nix
-        run: |
-          # Ensure the binary cache is populated
-          echo "cachix use nixpkgs" >> ~/.bashrc
-
-          # Load the Cachix binaries
-          source ~/.bashrc
-
-          # Build the Hugo website
-          nix build .
+        run: nix build .
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         id: artifact
