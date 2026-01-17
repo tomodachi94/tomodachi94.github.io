@@ -2,6 +2,7 @@
   description = "A flake for building my Hugo website";
 
   inputs = {
+    self.submodules = true;
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     ai-robots-txt = {
       url = "github:ai-robots-txt/ai.robots.txt";
