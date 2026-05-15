@@ -7,6 +7,10 @@ theme = "hugo-bearcub"
 
 staticDir = ["static"]
 
+[params.author]
+name = "Tomodachi94"
+# email = "your@email.com"
+
 [outputs]
 home = ["HTML", "RSS"]
 
