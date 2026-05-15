@@ -1,11 +1,15 @@
 baseURL = "https://tomodachi94.github.io/"
-languageCode = "en-us"
+locale = "en-US"
 title = "Tomodachi94's Musings"
 copyright = "Copyright © 2023-2026, Tomodachi94. All Rights Reserved unless explicitly stated."
 
 theme = "hugo-bearcub"
 
 staticDir = ["static"]
+
+[params.author]
+name = "Tomodachi94"
+# email = "your@email.com"
 
 [outputs]
 home = ["HTML", "RSS"]
