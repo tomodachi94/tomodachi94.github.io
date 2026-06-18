@@ -8,3 +8,6 @@ updates:
     directory: "vendor"
     schedule:
       interval: "weekly"
+  - package-ecosystem: "nix"
+    schedule:
+      interval: "daily"
