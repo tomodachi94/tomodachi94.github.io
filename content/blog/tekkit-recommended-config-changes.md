@@ -2,6 +2,10 @@
 title: "Recommended configuration changes for Tekkit 1.6.4"
 date: 2026-07-24
 draft: false
+comments:
+    host: floss.social
+    username: tomodachi94
+    id: 116978108717269626
 tags:
 - "Minecraft"
 - "Tekkit"
