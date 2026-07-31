@@ -12,7 +12,7 @@ jobs:
     outputs:
       artifact_id: ${{ steps.artifact.outputs.artifact_id }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth:  0    # Fetch all history for .GitInfo and .Lastmod
           submodules: true
