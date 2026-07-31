@@ -9,5 +9,6 @@ updates:
     schedule:
       interval: "weekly"
   - package-ecosystem: "nix"
+    directory: "/"
     schedule:
       interval: "daily"
