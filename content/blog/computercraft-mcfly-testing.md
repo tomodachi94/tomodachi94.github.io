@@ -85,8 +85,10 @@ cp "$SOURCE_DIR/my_library.lua" "$COMPUTER_DIR"
 cp -r "$SOURCE_DIR/test" "$COMPUTER_DIR"
 
 # Run CraftOS-PC in headless mode (no GUI) and with the data directory set to $DATA_DIR.
-craftos --directory "$DATA_DIR" --exec 'shell.run("test/mcfly.lua test"); os.shutdown()'
+craftos --headless --directory "$DATA_DIR" --exec 'shell.run("test/mcfly.lua test"); os.shutdown()'
 ```
+
+**Update 2026 July 30: The final invocation of `craftos` was missing `--headless`; this has been fixed. Thank you to [SethGamer1223](https://github.com/sethgamer1223) for reporting this.**
 
 Make sure to mark it executable with `chmod +x ./test/test.sh`.
 
